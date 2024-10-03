@@ -1,0 +1,245 @@
+{% extends "basic.html" %} 
+
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}" />
+<script src="{{url_for('static',filename='js/echarts.min.js')}}"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+
+{% endblock %} 
+
+{% block main %}
+
+    <div id="main-container" >
+        <!-- HTML Table -->
+        <h1 style="font-size: 22px;">Economic & Quantitative Data</h1>
+        <table id="example" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Data1</th>
+                    <th>Value</th>
+                    <th>Data2</th>
+                    <th>Value</th>
+                    <th>Data3</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>PCE</td>
+                    <td>CPI</td>
+                    <td>NFP</td>
+                    <td>SR</td>
+                    <td>URATE</td>
+                    <td>Edinburgh</td>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td>Garrett Winters</td>
+                    <td>Position</td>
+                    <td>Accountant</td>
+                    <td>Office</td>
+                    <td>Tokyo</td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+
+        <br>
+    
+        <h1 style="font-size: 22px;">Coppock Data</h1>
+        <table id="example2" class="display" style="width:70%">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>XLK</th>
+                    <th>XLY</th>
+                    <th>XLI</th>
+                    <th>XLP</th>
+                    <th>XLF</th>
+                    <th>XLE</th>
+                    <th>XLU</th>
+                    <th>XLRE</th>
+                    <th>XLC</th>
+                    <th>XLV</th>
+                    <th>XLB</th>
+                    <th>SPY</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Hardcoded rows -->
+                <tr>
+                    <td id="date1"></td>
+                    <td id="xlk1"></td>
+                    <td id="xly1"></td>
+                    <td id="xli1"></td>
+                    <td id="xlp1"></td>
+                    <td id="xlf1"></td>
+                    <td id="xle1"></td>
+                    <td id="xlu1"></td>
+                    <td id="xlre1"></td>
+                    <td id="xlc1"></td>
+                    <td id="xlv1"></td>
+                    <td id="xlb1"></td>
+                    <td id="spy1"></td>
+
+                </tr>
+                <tr>
+                    <td id="date2"></td>
+                    <td id="xlk2"></td>
+                    <td id="xly2"></td>
+                    <td id="xli2"></td>
+                    <td id="xlp2"></td>
+                    <td id="xlf2"></td>
+                    <td id="xle2"></td>
+                    <td id="xlu2"></td>
+                    <td id="xlre2"></td>
+                    <td id="xlc2"></td>
+                    <td id="xlv2"></td>
+                    <td id="xlb2"></td>
+                    <td id="spy2"></td>
+
+                </tr>
+                <tr>
+                    <td id="date3"></td>
+                    <td id="xlk3"></td>
+                    <td id="xly3"></td>
+                    <td id="xli3"></td>
+                    <td id="xlp3"></td>
+                    <td id="xlf3"></td>
+                    <td id="xle3"></td>
+                    <td id="xlu3"></td>
+                    <td id="xlre3"></td>
+                    <td id="xlc3"></td>
+                    <td id="xlv3"></td>
+                    <td id="xlb3"></td>
+                    <td id="spy3"></td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <h1 style="font-size: 22px;">Coppock Weight</h1>
+        <table id="example3" class="display" style="width:70%">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>XLK</th>
+                    <th>XLY</th>
+                    <th>XLI</th>
+                    <th>XLP</th>
+                    <th>XLF</th>
+                    <th>XLE</th>
+                    <th>XLU</th>
+                    <th>XLRE</th>
+                    <th>XLC</th>
+                    <th>XLV</th>
+                    <th>XLB</th>
+                    <th>SPY</th>
+                    <th>TLT</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="rdate1"></td>
+                    <td id="rxlk1"></td>
+                    <td id="rxly1"></td>
+                    <td id="rxli1"></td>
+                    <td id="rxlp1"></td>
+                    <td id="rxlf1"></td>
+                    <td id="rxle1"></td>
+                    <td id="rxlu1"></td>
+                    <td id="rxlre1"></td>
+                    <td id="rxlc1"></td>
+                    <td id="rxlv1"></td>
+                    <td id="rxlb1"></td>
+                    <td id="rspy1"></td>
+                    <td id="rtlt1"></td>
+                </tr>
+                <tr>
+                    <td id="rdate2"></td>
+                    <td id="rxlk2"></td>
+                    <td id="rxly2"></td>
+                    <td id="rxli2"></td>
+                    <td id="rxlp2"></td>
+                    <td id="rxlf2"></td>
+                    <td id="rxle2"></td>
+                    <td id="rxlu2"></td>
+                    <td id="rxlre2"></td>
+                    <td id="rxlc2"></td>
+                    <td id="rxlv2"></td>
+                    <td id="rxlb2"></td>
+                    <td id="rspy2"></td>
+                    <td id="rtlt2"></td>
+                </tr>
+                <tr>
+                    <td id="rdate3"></td>
+                    <td id="rxlk3"></td>
+                    <td id="rxly3"></td>
+                    <td id="rxli3"></td>
+                    <td id="rxlp3"></td>
+                    <td id="rxlf3"></td>
+                    <td id="rxle3"></td>
+                    <td id="rxlu3"></td>
+                    <td id="rxlre3"></td>
+                    <td id="rxlc3"></td>
+                    <td id="rxlv3"></td>
+                    <td id="rxlb3"></td>
+                    <td id="rspy3"></td>
+                    <td id="rtlt3"></td>
+                </tr>
+            </tbody>
+        </table>
+        
+
+
+        <br>
+        <h1 style="font-size: 22px;">Historical Data</h1>
+        <div>Data Export</div>
+        <div id="data" style="width: 900px; height: 450px;">
+           
+        </div>
+    </div>
+
+
+{% endblock %} 
+
+
+
+{% block script %}
+<script src="{{url_for('static',filename='js/coppock_data.js')}}"></script>
+
+<!-- jQuery (required for DataTables) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+<!-- Initialize DataTables -->
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable({
+            "paging": false,
+            "searching": false,
+            "ordering": true,
+            "info": false
+        });
+    });
+    $(document).ready(function() {
+        $('#example2').DataTable({
+            "paging": false,
+            "searching": false,
+            "ordering": true,
+            "info": false
+        });
+    });
+    $(document).ready(function() {
+        $('#example3').DataTable({
+            "paging": false,
+            "searching": false,
+            "ordering": true,
+            "info": false
+        });
+    });
+</script>
+
+{% endblock %}
+

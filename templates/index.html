@@ -1,0 +1,62 @@
+{% extends "basic.html" %} 
+
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}" />
+<script src="{{url_for('static',filename='js/echarts.min.js')}}"></script>
+{% endblock %} 
+
+
+{% block main %}
+<section class="banner">
+  <div class="banner-box">
+    <h2>StrategyMonitorDashboard!</h2>
+    <p>Explore More - Sandbox Version 1.0</p>
+    <!-- <form action="#" class="form" id="SearchForm">
+      <select id="SearchKey",class="input", style="width: 50%;">
+        <option value="option1">        Strategy Monitoring      </option>
+        <option value="option2">        Fundamental Research      </option>
+      </select>
+      
+      <button class="search-btn" id="searchBtn">
+        <img src="{{url_for('static',filename='pic/search.png')}}" alt="搜尋" />
+      </button>
+    </form>
+    <br> -->
+    <div class="descriptionbox">
+    Drive smarter decisions with data-driven insights across multiple timeframes and frameworks. Our expertise in risk management, return optimization, and resource allocation helps you navigate market dynamics and seize strategic opportunities.
+    </div>
+  </div>
+  
+</section>
+
+<!-- <section class="mains" id="mains"></section> -->
+<div class="echarts" id="main-container" style="display: flex; flex-direction: column; align-items: center;">
+    <!-- dropdown -->
+    <div id="strategyselector" class="hide" style="margin-top: 20px;">Strategy Name :
+        <select id="headingDropdown"></select>
+    </div>
+    <!-- selector -->
+    <div id="dateselector" class="hide" style="margin-top: 0px;">
+        <label for="year" >Comparing Peformance Date Starts At:</label>
+        <select id="year">
+          <option value="0">Year</option>
+        </select>
+
+        <label for="month"></label>
+        <select id="month">
+          <option value="0">Month</option>
+        </select>
+        <button id="logDateButton">Send</button>
+    </div>
+    <!-- graph -->
+    <div id="main" class="hide" style="width: 900px; height: 650px;"></div>
+    <br>
+</div>
+{% endblock %} 
+
+
+
+{% block script %}
+<script src="{{url_for('static',filename='js/index.js')}}"></script>
+<script src="{{url_for('static',filename='js/signcontroller.js')}}"></script>
+{% endblock %}

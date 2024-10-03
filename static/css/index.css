@@ -1,0 +1,282 @@
+/* 主頁面banner */
+#main.hide {
+  display: none;
+}
+
+.hide {
+  display: none;
+}
+
+#headingDropdown {
+  font-size: 15px;
+  padding: 10px; /* Adjust padding as needed */
+}
+
+
+
+.descriptionbox{
+  width: 80%; 
+  font-size: 18px;
+  padding-top: 50px;
+  padding-bottom: 100px;
+}
+
+
+
+#logDateButton {
+  background-color: lightblue;
+  color: white;
+  font-size: 18px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#logDateButton:hover {
+  background-color: skyblue;
+}
+
+
+.banner {
+  background-repeat: no-repeat, no-repeat;
+  width:100%;
+  height: 60vh;
+  background-image: url("../pic/pngegg.png"),
+    linear-gradient(1222deg, black,white);
+  background-position: bottom left 100%, bottom;
+  background-size: contain, cover;
+}
+/* Styling the banner section */
+
+
+
+.banner-box h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 85px;
+}
+
+.banner-box p {
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 15px;
+}
+
+.banner-box {
+  width: 90%;
+  margin: 0 auto;
+  padding: 10px;
+  max-width: 1200px;
+  color: #f8f8f8;
+}
+
+/* 搜學列表 */
+.form {
+  margin-top: 25px;
+  display: flex;
+}
+
+.input {
+  padding: 15px;
+  font-size: 16px;
+  color: #000;
+  border-radius: 5px 0 0 5px;
+  width: 400px;
+  outline: none;
+  line-height: 16px;
+  height: 46px;
+  box-shadow: 0 0 20px #8d97a3;
+}
+
+.input::placeholder {
+  color: #757575c9;
+}
+
+.search-btn {
+  background-color: #448899;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 46px;
+  border-radius: 0 5px 5px 0;
+  transition: background-color 0.2s;
+  outline: none;
+  cursor: pointer;
+}
+
+.search-btn:hover {
+  background-color: #337788;
+}
+
+.search-btn:active {
+  background-color: #66aabb;
+}
+
+.search-btn img {
+  width: 30px;
+  height: 30px;
+}
+
+/* 首頁景點框架 */
+
+.mains {
+  width: 90%;
+  max-width: 1200px;
+  margin: 55px auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.itembox {
+  margin: 15px;
+  width: calc(25% - 30px);
+  background-color: #fff;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid #e8e8e8;
+  transition: box-shadow 0.2s;
+}
+
+.itembox:hover {
+  box-shadow: 0 0 30px #aabbbb6b;
+}
+
+.itembox a {
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+}
+
+.itembox img {
+  width: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  overflow: hidden;
+  height: 162px;
+}
+
+.textbox {
+  margin: 0 10px;
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  color: #757575;
+}
+
+.title {
+  margin: 13px 0 15px;
+  font-weight: 700;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  margin: auto 0 12px;
+  font-weight: 400;
+  height: 100%;
+}
+
+.mains h1 {
+  color: #757575;
+  margin: 0 auto;
+  font-size: 20px;
+  font-weight: bolder;
+}
+.attraction-mrt {
+  font-weight: bolder;
+}
+
+.image-container .loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border: 7px solid #f8f8f8;
+  border-top: 7px solid #d7eaf1;
+  width: 67.5px;
+  height: 67.5px;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+}
+.image-container .loading {
+  filter: opacity(50%);
+}
+.image-container img {
+  position: relative;
+  width: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  overflow: hidden;
+  height: 162px;
+  filter: opacity(100%);
+  transition: filter 0.8s;
+}
+
+section {
+  width: 1200px;
+  /* background-color: lightgrey; */
+}
+
+/* RWD */
+@media only screen and (max-width: 1400px) {
+  .banner {
+    background-position: bottom right, top;
+    background-size: 60%, cover;
+  }
+  .itembox {
+    width: calc(100% / 3 - 30px);
+  }
+  .itembox img {
+    height: calc((100vw / 3 - 30px) * 0.6);
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .banner {
+    background-position: bottom right -20%, top;
+    background-size: 60%, cover;
+  }
+  .itembox {
+    width: calc(50% - 30px);
+  }
+  .itembox img {
+    height: calc((50vw - 30px) * 0.6);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .banner {
+    background-position: bottom right -25vw, top;
+    background-size: 90vw, cover;
+  }
+  .input {
+    width: 230px;
+  }
+  .mains {
+    margin: 55px 19px;
+  }
+  .itembox {
+    width: 100%;
+  }
+  .itembox img {
+    height: calc((100vw - 38px) * 0.6);
+  }
+}

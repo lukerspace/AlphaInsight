@@ -1,0 +1,27 @@
+# Ignore environment variable files
+.env
+
+# Ignore Docker-related files
+*.log
+*.pid
+docker-compose.override.yml
+
+# Ignore temporary or transient files/folders
+/tmp
+*.tmp
+
+# Ignore specific folders (adjust folder names as per your structure)
+allocation/
+
+# Ignore virtual environments (Python example)
+venv/
+__pycache__/
+
+# Ignore node_modules (if you're using Node.js)
+node_modules/
+
+# Ignore compiled Python files
+*.pyc
+
+# Ignore system-specific files
+.DS_Store  # macOS-specific
