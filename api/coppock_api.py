@@ -2,7 +2,6 @@ import sys,os,datetime
 sys.path.append("./")
 from dotenv import load_dotenv
 from flask import *
-import mysql.connector
 from api_db_query import select_coppock_data, select_coppock_ratio
 import pandas as pd
 import redis
@@ -48,3 +47,4 @@ def get_coppock_ratio():
     nested_json=select_coppock_ratio()
 
     return  jsonify(nested_json)
+

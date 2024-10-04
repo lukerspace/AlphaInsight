@@ -1,5 +1,9 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const apiUrl = '/api/coppock_data';  // Replace this with your actual API URL
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const apiUrl = '/api/coppock_data'; // Replace this with your actual API URL
+    const tableExample2 = document.getElementById('example2').getElementsByTagName('tbody')[0];
 
     // Function to fetch API data
     async function fetchCoppockData() {
@@ -12,42 +16,56 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to populate the table with data
+    // Function to dynamically populate the table with data
     function populateTable(data) {
-        const ids = [
-            { date: 'date1', xlk: 'xlk1', xly: 'xly1', xli: 'xli1', xlp: 'xlp1', xlf: 'xlf1', xle: 'xle1', xlu: 'xlu1', xlre: 'xlre1', xlc: 'xlc1', xlv: 'xlv1', xlb: 'xlb1', spy: 'spy1', },
-            { date: 'date2', xlk: 'xlk2', xly: 'xly2', xli: 'xli2', xlp: 'xlp2', xlf: 'xlf2', xle: 'xle2', xlu: 'xlu2', xlre: 'xlre2', xlc: 'xlc2', xlv: 'xlv2', xlb: 'xlb2', spy: 'spy2', },
-            { date: 'date3', xlk: 'xlk3', xly: 'xly3', xli: 'xli3', xlp: 'xlp3', xlf: 'xlf3', xle: 'xle3', xlu: 'xlu3', xlre: 'xlre3', xlc: 'xlc3', xlv: 'xlv3', xlb: 'xlb3', spy: 'spy3', }
-        ];
-
         const assetOrder = ['XLK', 'XLY', 'XLI', 'XLP', 'XLF', 'XLE', 'XLU', 'XLRE', 'XLC', 'XLV', 'XLB', 'SPY'];
 
-        const dateEntries = Object.entries(data);
-        
-        // Loop through each entry in the API data and each row in the table
-        dateEntries.forEach((entry, index) => {
-            const [date, values] = entry;
-            
-            // Make sure not to exceed the predefined rows
-            if (index < ids.length) {
-                document.getElementById(ids[index].date).textContent = date.split(' ')[0]; // Only show the date part
+        // Clear previous rows (if any)
+        tableExample2.innerHTML = '';
 
-                // Loop through the asset values and populate each cell
-                values.forEach((value, idx) => {
-                    const assetId = ids[index][assetOrder[idx].toLowerCase()];  // Get the ID based on the asset order
-                    document.getElementById(assetId).textContent = value.toFixed(2);  // Format the value to 2 decimal places
-                });
-            }
-        });
+        // Loop through the API data and create table rows and cells dynamically
+        Object.entries(data).forEach(([date, values], index) => {
+            // Create a new table row
+            const row = document.createElement('tr');
+
+            // Create and append the date cell
+            const dateCell = document.createElement('td');
+            dateCell.textContent = date.split(' ')[0]; // Show only the date part
+            row.appendChild(dateCell);
+
+            // Loop through each asset value and create cells for them
+            values.forEach((value, assetIndex) => {
+                const cell = document.createElement('td');
+                cell.textContent = value.toFixed(2); // Format to 2 decimal places
+                row.appendChild(cell); // Append the cell to the row
+            });
+
+            // Append the created row to the table
+            tableExample2.appendChild(row);
+            
+        })
+        decorateTable();
     }
 
     // Fetch and populate the table
     fetchCoppockData();
+    
+    // Function to decorate the table using DataTables
+    function decorateTable() {
+        $('#example2').DataTable({
+          paging: false,
+          searching: false,
+          info: false,
+        //   pageLength: 2,      // Show 50 rows per page
+        //   lengthMenu: [2, 3, 50, 500],
+          ordering: false,// Set number of rows per page
+        });
+    }
 });
 
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const apiUrl = '/api/coppock_ratio';  // Replace with your actual API URL
+    const tableExample3 = document.getElementById('example3').getElementsByTagName('tbody')[0];
 
     // Asset order corresponding to the table columns
     const assetKeys = ['XLK', 'XLY', 'XLI', 'XLP', 'XLF', 'XLE', 'XLU', 'XLRE', 'XLC', 'XLV', 'XLB', 'SPY', 'TLT'];
@@ -63,22 +81,48 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Function to populate the table with data
+    // Function to dynamically populate the table with data
     const populateTable = data => {
+        // Clear previous rows (if any)
+        tableExample3.innerHTML = '';
+
+        // Loop through the API data and create table rows and cells dynamically
         Object.entries(data).forEach(([date, values], index) => {
             // Limit to 3 rows
             if (index < 3) {
-                document.getElementById(`rdate${index + 1}`).textContent = date.split(' ')[0];  // Date column
+                // Create a new table row
+                const row = document.createElement('tr');
 
-                // Populate asset columns
+                // Create and append the date cell
+                const dateCell = document.createElement('td');
+                dateCell.textContent = date.split(' ')[0]; // Show only the date part
+                row.appendChild(dateCell);
+
+                // Loop through each asset value and create cells for them
                 values.forEach((value, assetIndex) => {
-                    const assetId = `r${assetKeys[assetIndex].toLowerCase()}${index + 1}`;
-                    document.getElementById(assetId).textContent = value.toFixed(2);
+                    const cell = document.createElement('td');
+                    cell.textContent = value.toFixed(2); // Format to 2 decimal places
+                    row.appendChild(cell); // Append the cell to the row
                 });
+
+                // Append the created row to the table
+                tableExample3.appendChild(row);
             }
         });
+        decorateTable()
     };
 
     // Fetch and populate the table
     fetchCoppockData();
+    
+    // Function to decorate the table using DataTables
+    function decorateTable() {
+        $('#example3').DataTable({
+          paging: false,
+          searching: false,
+          info: false,
+        //   pageLength: 5, 
+          ordering: false, // Set number of rows per page
+        });
+    }
 });

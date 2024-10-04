@@ -242,3 +242,23 @@ def select_coppock_ratio():
     return nested_json
 
 
+
+def select_daily_performance():
+    conn=mysql.connector.connect(
+        host = os.getenv("SERVER_HOST"),user=os.getenv("SERVER_USER"),
+        password=os.getenv("SERVER_PASSWORD"),database = "dashboard",
+        charset = "utf8",auth_plugin='caching_sha2_password'
+    )
+    cursor = conn.cursor()
+    sql="select * from daily_performance"
+    cursor.execute(sql)
+    my_data=cursor.fetchall()
+    column_names = [desc[0] for desc in cursor.description]
+    result = [dict(zip(column_names, row)) for row in my_data]
+    # Convert the result to JSON in str
+    json_data = json.dumps(result, default=str)  # Use default=str to handle non-serializable objects like datetime
+    # Load the JSON data
+    data = json.loads(json_data)
+
+    return data
+

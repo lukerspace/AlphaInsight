@@ -80,6 +80,3 @@ websocket-client==1.8.0
 Werkzeug==3.0.2
 wsproto==1.2.0
 yfinance==0.2.43
-
-
-
