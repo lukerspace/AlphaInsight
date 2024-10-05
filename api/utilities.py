@@ -8,22 +8,6 @@ import pandas_ta as ta
 import plotly.express as px
 
 
-def check_first_monday(date):
-    if date.weekday() != 0:
-        return False
-    
-    if date.month == (date - timedelta(days=7)).month:
-        return False
-        
-    return True
-
-
-def filter_first_day_in_month(series):
-
-    filtered_series = series.groupby(pd.Grouper(freq='MS')).head(1)
-
-    return filtered_series.index
-
 
 def cal_cagr(timeseries, since=None):
     if not since:
