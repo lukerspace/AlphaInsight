@@ -24,12 +24,12 @@ from api.nav_api import appNav
 from api.coppock_api import appCoppock
 from api.daily_api import appDaily
 
-
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 app.config["JSON_SORT_KEYS"] = False
 app.config['JWT_SECRET_KEY'] = 'pass'  # Change this to a strong secret key
+
 app.secret_key="hello"
 
 
@@ -37,6 +37,7 @@ app.register_blueprint(appNav, url_prefix='/api')
 app.register_blueprint(appUser, url_prefix='/api')
 app.register_blueprint(appCoppock, url_prefix='/api')
 app.register_blueprint(appDaily, url_prefix='/api')
+
 
 # Pages
 @app.route("/")
@@ -76,8 +77,6 @@ def member():
         print({"error": "Token not found in Redis"})
         return render_template("index.html")
     
-
-
     # Retrieve user email from session
     user_email = session.get('user', {}).get('email')
     name=session.get('user', {}).get('name')

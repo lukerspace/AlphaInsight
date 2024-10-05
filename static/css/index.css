@@ -1,5 +1,5 @@
 /* 主頁面banner */
-#main.hide #bh.hide  {
+#main.hide #bh.hide #mettable.hide {
   display: none;
 }
 

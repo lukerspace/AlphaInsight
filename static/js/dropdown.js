@@ -18,7 +18,7 @@ const dropdownList = () => {
         .then(data => {
           // Clear previous options
           dropdown.innerHTML = '';
-          console.log(data)
+          // console.log(data)
   
           // Populate the dropdown with fetched data
           data["dropdown_list"].forEach(strategy => {

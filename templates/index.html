@@ -3,6 +3,27 @@
 {% block css %}
 <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}" />
 <script src="{{url_for('static',filename='js/echarts.min.js')}}"></script>
+<style>
+  /* Adjust table size */
+  /* #mettable { */
+      /* width: 40%;  Adjust the width */
+      /* margin: 0 auto;  Center the table */
+      /* font-size: 16px;  Smaller font size */
+  /* } */
+
+  /* Center the text in both headers and table cells */
+  #mettable td {
+            padding: 6px;  /* Reduce cell padding */
+            text-align: center;  /* Center align text */
+            vertical-align: middle; /* Vertically align text in the middle */
+        }
+
+        /* Set font size of th tags to 14px */
+        /* Set font size of th tags to 14px and use !important to override DataTables' styles */
+  /* #mettable th { */
+      /* font-size: 10px !important;  Force 14px font size for headers */
+  /* } */
+</style>
 {% endblock %} 
 
 
@@ -48,17 +69,41 @@
         </select>
         <button id="logDateButton">Send</button>
     </div>
+
+    <table id="mettable" class="hide" style="width: 50px;">
+      <thead>
+          <tr>
+            <th>Assets</th>
+            <th>Return %</th>
+            <th>Comp. Annual Return</th>
+            <th>Max Drawdown %</th>
+            <th>Max Drawdown % Date</th>
+            <th>Return % / Max Drawdown %</th>
+            <th>Standard Deviation (Std)</th>
+            <th>Sharpe Ratio</th>
+            <th>Calmar Ratio</th>
+          </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+    <br>
     <!-- graph -->
     <div id="main" class="hide" style="width: 900px; height: 500px;padding:10px;"></div>
     <br>
     <div id="bh" class="hide" style="width: 900px; height: 500px;padding:10px;"></div>
     <br>
+
 </div>
 {% endblock %} 
 
 
 
 {% block script %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="{{url_for('static',filename='js/index.js')}}"></script>
 <script src="{{url_for('static',filename='js/signcontroller.js')}}"></script>
+
 {% endblock %}

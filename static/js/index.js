@@ -1,13 +1,16 @@
 // Function to fetch the data from mysql
+
 const fetchData =(strategyname,year,month)=>{
-  console.log("Verifying Token ..")
+  console.log("Verifying Token")
   
   let xaxisDate;
   let benchmarkValue;
   let strategyValue;
+  let benchmarkValueHold
+  let strategyValueHold
   if (token && new Date().getTime() < tokenExpiration) {
     console.log(token && new Date().getTime())
-    console.log(tokenExpiration)
+    // console.log(tokenExpiration)
     // console.log("token time usable:",token && new Date().getTime()<tokenExpiration)
 
     fetch(`${window.origin}/api/nav?graphname=${strategyname}&year=${year}&month=${month}`, {
@@ -22,7 +25,10 @@ const fetchData =(strategyname,year,month)=>{
         }
         return res.json();
       })
-      .then((data) => {
+      .then((ressponse_data) => {
+
+        //  chart from echart 
+        data=ressponse_data["data"]
         xaxisDate = data["Date"];
         benchmarkValue = data["Benchmarkvalue"];
         strategyValue = data["Strategyvalue"];
@@ -143,6 +149,14 @@ const fetchData =(strategyname,year,month)=>{
         option && myChart.setOption(option);
         option2 && myChart2.setOption(option2);
 
+        // performance table
+        var strategytablereview
+        var benchmarktablereview
+        strategytablereview=(ressponse_data["metrics"]["strategy"])
+        benchmarktablereview=(ressponse_data["metrics"]["benchmark"])
+        // console.log(benchmarktablereview)
+        // console.log(strategytablereview)
+        populateMeric(strategytablereview,benchmarktablereview)
       })
       .catch((error) => {
         console.error('There was a problem with ECHART :', error);
@@ -178,6 +192,90 @@ const fetchData =(strategyname,year,month)=>{
 };
 
 
+
+const populateMeric =(strategytablereview,benchmarktablereview)=>{
+    var asset1 = "Strategy";
+    var asset2 = "Benchmark";
+    // Get a reference to the table body
+    var tableBody = document.querySelector("#mettable tbody");
+    // Clear all existing rows (td) from the table body
+    tableBody.innerHTML = ''; // 
+    // Function to create a table row with the given asset name and data
+    function createTableRow(assetName, reviewData) {
+        var row = document.createElement("tr");
+        // Create and append the columns for each row
+        var assetCell = document.createElement("td");
+        assetCell.textContent = assetName;
+        row.appendChild(assetCell);
+        var returnCell = document.createElement("td");
+        returnCell.textContent = reviewData["Return %"];
+        row.appendChild(returnCell);
+        var annualReturnCell = document.createElement("td");
+        annualReturnCell.textContent = reviewData["Comp. Annual Return"];
+        row.appendChild(annualReturnCell);
+
+        var maxDrawdownCell = document.createElement("td");
+        maxDrawdownCell.textContent = reviewData["Max Drawdown %"];
+        row.appendChild(maxDrawdownCell);
+
+        var maxDrawdownDateCell = document.createElement("td");
+        maxDrawdownDateCell.textContent = new Date(reviewData["Max Drawdown % Date"]).toLocaleDateString();
+        row.appendChild(maxDrawdownDateCell);
+
+        var returnDrawdownRatioCell = document.createElement("td");
+        returnDrawdownRatioCell.textContent = reviewData["Return%/Max Drawdown%"];
+        row.appendChild(returnDrawdownRatioCell);
+
+        var stdDevCell = document.createElement("td");
+        stdDevCell.textContent = reviewData["Std"];
+        row.appendChild(stdDevCell);
+
+        var sharpeRatioCell = document.createElement("td");
+        sharpeRatioCell.textContent = reviewData["Sharpe Ratio"];
+        row.appendChild(sharpeRatioCell);
+
+        var calmarRatioCell = document.createElement("td");
+        calmarRatioCell.textContent = reviewData["Calmar Ratio"];
+        row.appendChild(calmarRatioCell);
+        return row;
+    }
+
+    // Create the rows for both the strategy and benchmark
+    var strategyRow = createTableRow(asset1, strategytablereview);
+    var benchmarkRow = createTableRow(asset2, benchmarktablereview);
+
+    // Append the rows to the table body
+    tableBody.appendChild(strategyRow);
+    tableBody.appendChild(benchmarkRow);
+    
+    $(document).ready(function() {
+      // Check if DataTable is already initialized
+      if ($.fn.DataTable.isDataTable('#mettable')) {
+          // If DataTable is initialized, just clear and redraw it
+          $('#mettable').DataTable().clear();
+      } else {
+          // If DataTable is not initialized, initialize it
+          $('#mettable').DataTable({
+              "paging": false,
+              "searching": false,
+              "ordering": false,
+              "info": false,
+              "paging": false  // Optionally disable paging if height is limited
+          });
+        }
+    });
+
+    // Show the table if it was initially hidden
+    // document.getElementById("mettable").classList.remove("hide");
+
+
+}
+
+
+
+
+
+
 // Function to log Selected Date
 const logSelectedDate=()=> {
   const year = document.getElementById("year").value;
@@ -189,6 +287,7 @@ const logSelectedDate=()=> {
     const yyyymm = year + month.padStart(2, '0');
     console.log(yyyymm)
     fetchData(strategyname,year, month);
+
   } else {
     alert("Please select both year and month.");
   }
@@ -229,7 +328,7 @@ const populateYears=()=> {
 // Check token validity and fetch data if valid
 const token = localStorage.getItem('token');
 const tokenExpiration = localStorage.getItem('tokenExpiration');
-console.log('localstorage',token)
+// console.log('localstorage',token)
 console.log('localstorage time',tokenExpiration)
 
 // Populate months dropdown &  Populate years dropdown on page load
@@ -255,7 +354,7 @@ const defaultYear = new Date().getFullYear()-1;
 const defaultMonth = new Date().getMonth()+1  ; // Month is zero-indexed, so we add 1 to get the correct month
 document.getElementById('year').value = defaultYear;
 document.getElementById('month').value = defaultMonth;
-console.log(defaultYear,defaultMonth,defaultstrategy)
+// console.log(defaultYear,defaultMonth,defaultstrategy)
 fetchData(defaultstrategy,defaultYear, defaultMonth);
 
 // Add click event listener to the button

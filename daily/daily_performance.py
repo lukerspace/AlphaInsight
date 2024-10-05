@@ -14,8 +14,8 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 
 def daily_performance():
-    df1=pandas.read_csv("sp500_component.csv")
-    df2=pandas.read_csv("nasdaq100_component.csv")
+    df1=pandas.read_csv("/app/daily/sp500_component.csv")
+    df2=pandas.read_csv("/app/daily/nasdaq100_component.csv")
 
     already_sent_ticker_list=[]
     strength_table_dic={}
