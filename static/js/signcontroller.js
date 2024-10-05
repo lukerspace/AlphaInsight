@@ -7,6 +7,7 @@ function signinCheck() {
         if (data.data) {
           // console.log(data, "登入成功顯示圖表");
           document.getElementById("main").classList.remove("hide");
+          document.getElementById("bh").classList.remove("hide");
           document.getElementById("dateselector").classList.remove("hide");
           document.getElementById("strategyselector").classList.remove("hide");
           dropdownList();

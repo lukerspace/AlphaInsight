@@ -26,11 +26,15 @@ const fetchData =(strategyname,year,month)=>{
         xaxisDate = data["Date"];
         benchmarkValue = data["Benchmarkvalue"];
         strategyValue = data["Strategyvalue"];
-
+        benchmarkValueHold = data["BenchmarkvalueHold"];
+        strategyValueHold = data["StrategyvalueHold"];
 
         var chartDom = document.getElementById('main');
+        var chartDom2= document.getElementById('bh')
         var myChart = echarts.init(chartDom);
+        var myChart2 = echarts.init(chartDom2);
         var option;
+        var option2;
 
         option = {
           title: {
@@ -84,8 +88,60 @@ const fetchData =(strategyname,year,month)=>{
           ]
         };
 
+        option2={
+          title: {
+            text: 'B&H Return from Different Start Dates'
+          },
+          tooltip: {
+            trigger: 'axis'
+          },
+          legend: {
+            data: [ 'benchmark', 'strategy']
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+          },
+          toolbox: {
+            feature: {
+              saveAsImage: {}
+            }
+          },
+          xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: xaxisDate
+          },
+          yAxis: {
+            type: 'value'
+          },
+          color: ['orange', '#006400'],
+          series: [
+            {
+              name: 'benchmark',
+              type: 'line',
+              lineStyle: {
+                width: 3 // Set line width to 3
+              },
+
+              data: benchmarkValueHold
+            },
+            {
+              name: 'strategy',
+              type: 'line',
+              lineStyle: {
+                width: 3 // Set line width to 3
+              },
+
+              data: strategyValueHold
+            }
+          ]
+        }
 
         option && myChart.setOption(option);
+        option2 && myChart2.setOption(option2);
 
       })
       .catch((error) => {
@@ -194,7 +250,7 @@ populateYears();
 
 
 // Set default year and month values
-const defaultstrategy="SPY_TRADE_FEAR_INDEX"
+const defaultstrategy="COT_COMMERCIAL"
 const defaultYear = new Date().getFullYear()-1;
 const defaultMonth = new Date().getMonth()+1  ; // Month is zero-indexed, so we add 1 to get the correct month
 document.getElementById('year').value = defaultYear;

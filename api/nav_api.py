@@ -80,9 +80,14 @@ def get_equity_curve():
     tmp2["date"]=pd.to_datetime(tmp2["date"])
 
     tmp = pd.merge(tmp1, tmp2, on="date", how="inner").set_index("date")
+
     first_val_strategy=tmp["strategy"][0]
     first_val_benchmark=tmp["benchmark"][0]
-    print(first_val_strategy,first_val_benchmark)
+
+    last_val_strategy=tmp["strategy"][-1]
+    last_val_benchmark=tmp["benchmark"][-1]
+
+    print(first_val_strategy,first_val_benchmark,last_val_strategy,last_val_benchmark)
     tmp=tmp.sort_index()
     tmp.index=tmp.index.strftime('%Y-%m-%d')
     result=tmp.copy()
@@ -90,17 +95,21 @@ def get_equity_curve():
     # tmp = tmp / tmp.iloc[0]
     # tmp["benchmark"]=round(tmp["benchmark"]*100-100,3)
     # tmp["strategy"]=round(tmp["strategy"]*100-100,3)
-    result["benchmark"]=round(100*result["benchmark"]/first_val_benchmark-100,3)
-    result["strategy"]=round(100*result["strategy"]/first_val_strategy-100,3)
+    result["benchmark_r"]=round(100*result["benchmark"]/first_val_benchmark-100,3)
+    result["strategy_r"]=round(100*result["strategy"]/first_val_strategy-100,3)
+    result["benchmark_bh"]=round(100*last_val_benchmark/result["benchmark"]-100,3)
+    result["strategy_bh"]=round(100*last_val_strategy/result["strategy"]-100,3)
+
     print(result)
+    dt=result.index.to_list()
+    bench=result["benchmark_r"].to_list()
+    strat=result["strategy_r"].to_list()
+    benchmark_bh=result["benchmark_bh"].to_list()
+    strat_bh=result["strategy_bh"].to_list()
 
-
-    
+    response_data={"Date":dt,"Benchmarkvalue":bench,"Strategyvalue":strat,"BenchmarkvalueHold":benchmark_bh,"StrategyvalueHold":strat_bh}
     try:
-
-        return jsonify( {"Date": result.index.to_list(),\
-                        "Benchmarkvalue":result["benchmark"].to_list(),\
-                        "Strategyvalue":result["strategy"].to_list()}),200
+        return jsonify(response_data),200
     
     except:
         data = {

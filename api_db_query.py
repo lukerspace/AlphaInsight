@@ -187,7 +187,6 @@ def select_coppock_data():
     return nested_json
 
 
-
 def select_coppock_ratio():
     conn=mysql.connector.connect(
         host = os.getenv("SERVER_HOST"),user=os.getenv("SERVER_USER"),
@@ -240,7 +239,6 @@ def select_coppock_ratio():
             nested_json[m]=row_value
                 # print(m,t,v)
     return nested_json
-
 
 
 def select_daily_performance():
