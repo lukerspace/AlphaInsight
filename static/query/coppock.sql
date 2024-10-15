@@ -21,7 +21,7 @@ INSERT INTO coppock (date, ticker, value, category) VALUES ('2024-10-31', 'XLC',
 INSERT INTO coppock (date, ticker, value, category) VALUES ('2024-10-31', 'XLV', -8.76, 'coppock_value');
 INSERT INTO coppock (date, ticker, value, category) VALUES ('2024-10-31', 'XLB', 3.89, 'coppock_value');
 INSERT INTO coppock (date, ticker, value, category) VALUES ('2024-10-31', 'SPY', 22.10, 'coppock_value');
-INSERT INTO coppock (date, ticker, value, category) VALUES ('2024-10-31', 'TLT', -12.50, 'coppock_value');
+
 
 
 

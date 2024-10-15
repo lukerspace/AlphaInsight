@@ -6,7 +6,6 @@ use dashboard;
 CREATE TABLE IF NOT EXISTS nav (
     Date DATETIME,
     Nav FLOAT,
-    Label VARCHAR(255),
     Graphname VARCHAR(255),
     CreatedDate DATETIME
 );
@@ -20,4 +19,5 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 insert into users (name,email,password,created_at) VALUES ('root','root@admin','0000','2024-09-03');
+insert into users (name,email,password,created_at) VALUES ('user1','test@admin','0000','2024-09-03');
 

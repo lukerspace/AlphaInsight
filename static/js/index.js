@@ -349,7 +349,7 @@ populateYears();
 
 
 // Set default year and month values
-const defaultstrategy="COT_COMMERCIAL"
+const defaultstrategy="COPPOCK"
 const defaultYear = new Date().getFullYear()-1;
 const defaultMonth = new Date().getMonth()+1  ; // Month is zero-indexed, so we add 1 to get the correct month
 document.getElementById('year').value = defaultYear;
