@@ -1,14 +1,5 @@
 CREATE DATABASE IF NOT EXISTS dashboard;
-
 use dashboard;
-
-
-CREATE TABLE IF NOT EXISTS nav (
-    Date DATETIME,
-    Nav FLOAT,
-    Graphname VARCHAR(255),
-    CreatedDate DATETIME
-);
 
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,

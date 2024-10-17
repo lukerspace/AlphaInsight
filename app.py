@@ -40,6 +40,7 @@ app.register_blueprint(appDaily, url_prefix='/api')
 
 
 # Pages
+
 @app.route("/")
 def index():
 	# return render_template("index.html")

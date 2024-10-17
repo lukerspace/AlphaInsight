@@ -13,9 +13,9 @@ sys.path.append("./")
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 
-def daily_performance():
-    df1=pandas.read_csv("/app/daily/sp500_component.csv")
-    df2=pandas.read_csv("/app/daily/nasdaq100_component.csv")
+def update_watchlist_table():
+    df1=pandas.read_csv("./utilities_watchlist/sp500_component.csv")
+    df2=pandas.read_csv("./utilities_watchlist/nasdaq100_component.csv")
 
     already_sent_ticker_list=[]
     strength_table_dic={}
@@ -155,7 +155,7 @@ INSERT INTO daily_performance (ticker, daily_change, week_change, bi_weekly_chan
 VALUES (%s, %s, %s, %s, %s, %s);
 """
 
-df=daily_performance()
+df=update_watchlist_table()
 for index, row in df.iterrows():
     cursor.execute(insert_query, (
         row['Ticker'],        # Ticker symbol
@@ -172,3 +172,20 @@ conn.commit()
 # Close the cursor and connection
 cursor.close()
 conn.close()
+
+
+
+
+
+# DROP TABLE IF EXISTS daily_performance;
+
+# CREATE TABLE daily_performance (
+#     id INT AUTO_INCREMENT PRIMARY KEY,
+#     ticker VARCHAR(10) NOT NULL,       -- Stores the stock ticker symbol
+#     daily_change FLOAT NOT NULL,       -- Daily percentage change as a float
+#     week_change FLOAT NOT NULL,        -- Weekly percentage change as a float
+#     bi_weekly_change FLOAT NOT NULL,   -- Bi-weekly change as a float
+#     monthly_change FLOAT NOT NULL,     -- Monthly change as a float
+#     quarterly_change FLOAT NOT NULL,   -- Quarterly change as a float
+#     created_at DATETIME DEFAULT CURRENT_TIMESTAMP  -- Timestamp when the record is created
+# );

@@ -61,6 +61,7 @@ def generate_coppock():
     result=pd.concat([result,data["Ref Coppock"]],axis=1)
 
     signals=result.dropna()
+    print("fix last values date : ",signals.index[-1])
     signals=signals.loc[signals.index<=datetime.datetime.now()]
     signals.columns=[i.split(" ")[0] for i in signals.columns]
     signals=signals.rename(columns={"Ref":"SPY"})
@@ -81,12 +82,39 @@ def generate_coppock():
     return signals,allocation
 
 
+def update_coppock_tables():
+    conn=mysql.connector.connect(
+    host = os.getenv("SERVER_HOST"),\
+    user=os.getenv("SERVER_USER"),\
+    password=os.getenv("SERVER_PASSWORD"),\
+    database = "dashboard",charset = "utf8",\
+    auth_plugin='caching_sha2_password')
+    cursor = conn.cursor()
+
+    create_table_query = """
+    CREATE TABLE IF NOT EXISTS coppock (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        date TIMESTAMP NOT NULL,
+        ticker VARCHAR(100) NOT NULL,
+        value FLOAT NOT NULL,
+        category VARCHAR(100) NOT NULL,
+        sysdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    """
+    # Execute the query to create the table
+    cursor.execute(create_table_query)
+    # Commit changes
+    conn.commit()
+    # Close the cursor and connection
+    cursor.close()
+    conn.close()
+    print("update coppock tables")
+    return
+
+
+
 signals,allocation=generate_coppock()
-
-
-
-
-
+update_coppock_tables()
 conn=mysql.connector.connect(
 host = os.getenv("SERVER_HOST"),\
 user=os.getenv("SERVER_USER"),\
@@ -94,7 +122,6 @@ password=os.getenv("SERVER_PASSWORD"),\
 database = "dashboard",charset = "utf8",\
 auth_plugin='caching_sha2_password')
 cursor = conn.cursor()
-
 
 dfs=[signals,allocation]
 for num in range(len(dfs)):
@@ -127,7 +154,9 @@ for num in range(len(dfs)):
                 conn.commit()
                 print("INSERT ",row_data_tuple)
             else:
-                print(" Data Exist .." )
+                # print(" Data Exist .." )
+                pass
+
 
 
 
