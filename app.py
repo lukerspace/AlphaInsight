@@ -22,7 +22,7 @@ redis_client = redis.StrictRedis(
 from api.user_api import appUser
 from api.nav_api import appNav
 from api.coppock_api import appCoppock
-from api.daily_api import appDaily
+from api.watchlist_api import appDaily
 
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False

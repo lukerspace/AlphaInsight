@@ -7,7 +7,7 @@ from api_db_query import select_nav,select_benchmark
 import pandas as pd
 import redis
 import os
-import api.utilities
+import lib.utilities
 
 
 app = Flask(__name__)
@@ -116,8 +116,8 @@ def get_equity_curve():
     metric_df=combined_df.copy()
     metric_df.index=pd.to_datetime(metric_df.index)
     # print(api.utilities.gen_stats_from_equity(metric_df["metic_strategy_r"]))
-    metric_dic={"strategy":api.utilities.gen_stats_from_equity(metric_df["metic_strategy_r"]),\
-                "benchmark":api.utilities.gen_stats_from_equity(metric_df["metic_benchmark_r"])}
+    metric_dic={"strategy":lib.utilities.gen_stats_from_equity(metric_df["metic_strategy_r"]),\
+                "benchmark":lib.utilities.gen_stats_from_equity(metric_df["metic_benchmark_r"])}
     
 
     # json_response = json.dumps(response_data, sort_keys=False)
