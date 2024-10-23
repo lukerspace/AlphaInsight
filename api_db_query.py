@@ -269,15 +269,19 @@ def select_iv_delta():
         charset = "utf8",auth_plugin='caching_sha2_password'
     )
     cursor = conn.cursor()
-    sql = """ SELECT * FROM iv_delta ORDER BY date DESC LIMIT 5 """
+    sql = """ SELECT * FROM iv_delta ORDER BY date DESC LIMIT 100 """
     cursor.execute(sql)
     my_data=cursor.fetchall()
     column_names = [desc[0] for desc in cursor.description]
     result = [dict(zip(column_names, row)) for row in my_data]
+    records=(pd.DataFrame(result).sort_values("date")).to_dict(orient='records')
     # Convert the result to JSON in str
-    json_data = json.dumps(result, default=str)  # Use default=str to handle non-serializable objects like datetime
-    # Load the JSON data
+    # json_data = json.dumps(result, default=str)  # Use default=str to handle non-serializable objects like datetime
+    # # Load the JSON data
+    json_data = json.dumps(records,default=str)
     data = json.loads(json_data)
 
     return data
 
+
+# select_iv_delta()

@@ -361,8 +361,6 @@ fetchData(defaultstrategy,defaultYear, defaultMonth);
 document.getElementById("logDateButton").addEventListener("click", logSelectedDate);
 
 
-
-
 if (localStorage.getItem('signoutTriggered')=="false") {
   localStorage.removeItem('signoutTriggered')
 }
