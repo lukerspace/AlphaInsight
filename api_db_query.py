@@ -7,10 +7,11 @@ import numpy as np
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from datetime import  timedelta
-## 資料庫敏感性資料
+
 load_dotenv()
 
-# 新增會員資料 選取使用者會員，新增使用者會員
+
+
 def user_select(**kargs):
     conn=mysql.connector.connect(
         host = os.getenv("SERVER_HOST"),user=os.getenv("SERVER_USER"),
@@ -33,7 +34,7 @@ def user_select(**kargs):
     else:
         return None
    
-# 新增使用者
+
 def user_insert(**kargs):
     conn=mysql.connector.connect(
         host = os.getenv("SERVER_HOST"),user=os.getenv("SERVER_USER"),
@@ -249,6 +250,26 @@ def select_daily_performance():
     )
     cursor = conn.cursor()
     sql="select * from daily_performance"
+    cursor.execute(sql)
+    my_data=cursor.fetchall()
+    column_names = [desc[0] for desc in cursor.description]
+    result = [dict(zip(column_names, row)) for row in my_data]
+    # Convert the result to JSON in str
+    json_data = json.dumps(result, default=str)  # Use default=str to handle non-serializable objects like datetime
+    # Load the JSON data
+    data = json.loads(json_data)
+
+    return data
+
+
+def select_iv_delta():
+    conn=mysql.connector.connect(
+        host = os.getenv("SERVER_HOST"),user=os.getenv("SERVER_USER"),
+        password=os.getenv("SERVER_PASSWORD"),database = "dashboard",
+        charset = "utf8",auth_plugin='caching_sha2_password'
+    )
+    cursor = conn.cursor()
+    sql = """ SELECT * FROM iv_delta ORDER BY date DESC LIMIT 5 """
     cursor.execute(sql)
     my_data=cursor.fetchall()
     column_names = [desc[0] for desc in cursor.description]
