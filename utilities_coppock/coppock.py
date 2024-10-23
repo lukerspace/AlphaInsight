@@ -34,7 +34,6 @@ def shift_index(date,df1):
         date += timedelta(days=1)
     return date
 
-
 def generate_coppock():
     reference = yf.download("SPY")["Adj Close"].resample("M").last()[:]
     reference_daily = yf.download("SPY")["Adj Close"]
@@ -81,8 +80,7 @@ def generate_coppock():
     # allocation.index=(price.drop_duplicates(subset="YM",keep="first").index[:])
     return signals,allocation
 
-
-def update_coppock_tables():
+def conncection_database():
     conn=mysql.connector.connect(
     host = os.getenv("SERVER_HOST"),\
     user=os.getenv("SERVER_USER"),\
@@ -90,7 +88,10 @@ def update_coppock_tables():
     database = "dashboard",charset = "utf8",\
     auth_plugin='caching_sha2_password')
     cursor = conn.cursor()
+    return cursor,conn
 
+def update_coppock_tables():
+    cursor,conn = conncection_database()
     create_table_query = """
     CREATE TABLE IF NOT EXISTS coppock (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -111,54 +112,51 @@ def update_coppock_tables():
     print("update coppock tables")
     return
 
+def insert_coppock_table():
+    signals,allocation=generate_coppock()
+    update_coppock_tables()
+    cursor ,conn=conncection_database()
+    dfs=[signals,allocation]
+    for num in range(len(dfs)):
 
+        if num==0:
+            category="coppock_value"
+        else:
+            category="coppock_ratio"
+        
+        dataset=dfs[num]
+        ticker_list=list(dataset.columns)
+        for index, row in dataset.iterrows():
+            dt=(str(row.name)[:10])
+            for myticker in ticker_list:
+                tk=(myticker)
+                # print(row[myticker])
+                val=(round(row[myticker],4))
+                row_data_tuple=(tuple((dt,tk,val,category)))
+                
+                check_sql="SELECT COUNT(*) FROM coppock WHERE date='{}' and ticker='{}' and category='{}';".format(dt,tk,category)
+                cursor.execute(check_sql)
+                result=cursor.fetchone()
+                # print(result)
+                if result[0]==0:
+                    insert_sql = '''
+                        INSERT INTO coppock (date, ticker, value, category)
+                        VALUES (%s, %s, %s, %s)
+                    '''
+                    cursor.execute(insert_sql, row_data_tuple)
+                    conn.commit()
+                    print("INSERT ",row_data_tuple)
+                else:
+                    # print(" Data Exist .." )
+                    pass
 
-signals,allocation=generate_coppock()
-update_coppock_tables()
-conn=mysql.connector.connect(
-host = os.getenv("SERVER_HOST"),\
-user=os.getenv("SERVER_USER"),\
-password=os.getenv("SERVER_PASSWORD"),\
-database = "dashboard",charset = "utf8",\
-auth_plugin='caching_sha2_password')
-cursor = conn.cursor()
-
-dfs=[signals,allocation]
-for num in range(len(dfs)):
-
-    if num==0:
-        category="coppock_value"
-    else:
-        category="coppock_ratio"
-    
-    dataset=dfs[num]
-    ticker_list=list(dataset.columns)
-    for index, row in dataset.iterrows():
-        dt=(str(row.name)[:10])
-        for myticker in ticker_list:
-            tk=(myticker)
-            # print(row[myticker])
-            val=(round(row[myticker],4))
-            row_data_tuple=(tuple((dt,tk,val,category)))
-            
-            check_sql="SELECT COUNT(*) FROM coppock WHERE date='{}' and ticker='{}' and category='{}';".format(dt,tk,category)
-            cursor.execute(check_sql)
-            result=cursor.fetchone()
-            # print(result)
-            if result[0]==0:
-                insert_sql = '''
-                    INSERT INTO coppock (date, ticker, value, category)
-                    VALUES (%s, %s, %s, %s)
-                '''
-                cursor.execute(insert_sql, row_data_tuple)
-                conn.commit()
-                print("INSERT ",row_data_tuple)
-            else:
-                # print(" Data Exist .." )
-                pass
+    cursor.close()
+    conn.close()
 
 
 
+if __name__ == '__main__':
+    insert_coppock_table()
 
 
 

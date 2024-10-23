@@ -12,6 +12,9 @@ import mysql.connector
 sys.path.append("./")
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
+load_dotenv()
+print(os.getenv("SERVER_HOST"))
+
 
 def update_watchlist_table():
     df1=pandas.read_csv("./utilities_watchlist/sp500_component.csv")
@@ -101,77 +104,74 @@ def update_watchlist_table():
     # daily_highlight_table.to_excel("data_{}.xlsx".format(current_date_in_string))
     return daily_highlight_table[["Ticker","Day_Chg","Weekly_Chg","Biweekly_Chg","Monthly_Chg","Quarterly_Chg"]]
 
+def conncection_database():
+    conn=mysql.connector.connect(
+    host = os.getenv("SERVER_HOST"),\
+    user=os.getenv("SERVER_USER"),\
+    password=os.getenv("SERVER_PASSWORD"),\
+    database = "dashboard",charset = "utf8",\
+    auth_plugin='caching_sha2_password')
+    cursor = conn.cursor()
+    return cursor,conn
 
-load_dotenv()
+def insert_watchlist_table():
+    # Create a cursor object
+    cursor , conn=conncection_database()
+    # SQL query to drop the table if it exists
+    drop_table_query = """
+    DROP TABLE IF EXISTS daily_performance;
+    """
+    # SQL query to create the new table
+    create_table_query = """
+    CREATE TABLE daily_performance (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        ticker VARCHAR(10) NOT NULL, 
+        daily_change FLOAT NOT NULL,     
+        week_change FLOAT NOT NULL,       
+        bi_weekly_change FLOAT NOT NULL,  
+        monthly_change FLOAT NOT NULL,    
+        quarterly_change FLOAT NOT NULL,   
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP  
+    );
+    """
+    # Execute the SQL queries
+    try:
+        cursor.execute(drop_table_query)   # Drop table if exists
+        cursor.execute(create_table_query) # Create table
+        conn.commit()                      # Commit changes
+        print("Table daily_performance created successfully!")
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+        conn.rollback()                    # Rollback in case of error
 
-print("daily...",os.getenv("SERVER_HOST"))
+    # Close the cursor and connection
+    insert_query = """
+    INSERT INTO daily_performance (ticker, daily_change, week_change, bi_weekly_change, monthly_change, quarterly_change)
+    VALUES (%s, %s, %s, %s, %s, %s);
+    """
 
-# Establish connection to MySQL database
-conn = mysql.connector.connect(
-    host=os.getenv("SERVER_HOST"),
-    user=os.getenv("SERVER_USER"),
-    password=os.getenv("SERVER_PASSWORD"),
-    database="dashboard",
-    charset="utf8",
-    auth_plugin='caching_sha2_password'
-)
+    df=update_watchlist_table()
+    for index, row in df.iterrows():
+        cursor.execute(insert_query, (
+            row['Ticker'],        # Ticker symbol
+            row['Day_Chg'],       # Daily change
+            row['Weekly_Chg'],    # Weekly change
+            row['Biweekly_Chg'],  # Biweekly change
+            row['Monthly_Chg'],   # Monthly change
+            row['Quarterly_Chg']  # Quarterly change
+        ))
+        print(row['Ticker'],"... ")
+    # Commit the transaction
+    conn.commit()
 
-# Create a cursor object
-cursor = conn.cursor()
+    # Close the cursor and connection
+    cursor.close()
+    conn.close()
 
-# SQL query to drop the table if it exists
-drop_table_query = """
-DROP TABLE IF EXISTS daily_performance;
-"""
 
-# SQL query to create the new table
-create_table_query = """
-CREATE TABLE daily_performance (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    ticker VARCHAR(10) NOT NULL, 
-    daily_change FLOAT NOT NULL,     
-    week_change FLOAT NOT NULL,       
-    bi_weekly_change FLOAT NOT NULL,  
-    monthly_change FLOAT NOT NULL,    
-    quarterly_change FLOAT NOT NULL,   
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP  
-);
-"""
 
-# Execute the SQL queries
-try:
-    cursor.execute(drop_table_query)   # Drop table if exists
-    cursor.execute(create_table_query) # Create table
-    conn.commit()                      # Commit changes
-    print("Table daily_performance created successfully!")
-except mysql.connector.Error as err:
-    print(f"Error: {err}")
-    conn.rollback()                    # Rollback in case of error
-
-# Close the cursor and connection
-
-insert_query = """
-INSERT INTO daily_performance (ticker, daily_change, week_change, bi_weekly_change, monthly_change, quarterly_change)
-VALUES (%s, %s, %s, %s, %s, %s);
-"""
-
-df=update_watchlist_table()
-for index, row in df.iterrows():
-    cursor.execute(insert_query, (
-        row['Ticker'],        # Ticker symbol
-        row['Day_Chg'],       # Daily change
-        row['Weekly_Chg'],    # Weekly change
-        row['Biweekly_Chg'],  # Biweekly change
-        row['Monthly_Chg'],   # Monthly change
-        row['Quarterly_Chg']  # Quarterly change
-    ))
-    print(row['Ticker'],"... ")
-# Commit the transaction
-conn.commit()
-
-# Close the cursor and connection
-cursor.close()
-conn.close()
+if __name__ == '__main__':
+    insert_watchlist_table()
 
 
 
