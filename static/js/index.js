@@ -1,8 +1,6 @@
-// Function to fetch the data from mysql
-
+// Function
 const fetchData =(strategyname,year,month)=>{
-  console.log("Verifying Token")
-  
+  console.log("Verifying")
   let xaxisDate;
   let benchmarkValue;
   let strategyValue;
@@ -156,7 +154,7 @@ const fetchData =(strategyname,year,month)=>{
         benchmarktablereview=(ressponse_data["metrics"]["benchmark"])
         // console.log(benchmarktablereview)
         // console.log(strategytablereview)
-        populateMeric(strategytablereview,benchmarktablereview)
+        renderMericTable(strategytablereview,benchmarktablereview)
       })
       .catch((error) => {
         console.error('There was a problem with ECHART :', error);
@@ -191,93 +189,7 @@ const fetchData =(strategyname,year,month)=>{
   }
 };
 
-
-
-const populateMeric =(strategytablereview,benchmarktablereview)=>{
-    var asset1 = "Strategy";
-    var asset2 = "Benchmark";
-    // Get a reference to the table body
-    var tableBody = document.querySelector("#mettable tbody");
-    // Clear all existing rows (td) from the table body
-    tableBody.innerHTML = ''; // 
-    // Function to create a table row with the given asset name and data
-    function createTableRow(assetName, reviewData) {
-        var row = document.createElement("tr");
-        // Create and append the columns for each row
-        var assetCell = document.createElement("td");
-        assetCell.textContent = assetName;
-        row.appendChild(assetCell);
-        var returnCell = document.createElement("td");
-        returnCell.textContent = reviewData["Return %"];
-        row.appendChild(returnCell);
-        var annualReturnCell = document.createElement("td");
-        annualReturnCell.textContent = reviewData["Comp. Annual Return"];
-        row.appendChild(annualReturnCell);
-
-        var maxDrawdownCell = document.createElement("td");
-        maxDrawdownCell.textContent = reviewData["Max Drawdown %"];
-        row.appendChild(maxDrawdownCell);
-
-        var maxDrawdownDateCell = document.createElement("td");
-        maxDrawdownDateCell.textContent = new Date(reviewData["Max Drawdown % Date"]).toLocaleDateString();
-        row.appendChild(maxDrawdownDateCell);
-
-        var returnDrawdownRatioCell = document.createElement("td");
-        returnDrawdownRatioCell.textContent = reviewData["Return%/Max Drawdown%"];
-        row.appendChild(returnDrawdownRatioCell);
-
-        var stdDevCell = document.createElement("td");
-        stdDevCell.textContent = reviewData["Std"];
-        row.appendChild(stdDevCell);
-
-        var sharpeRatioCell = document.createElement("td");
-        sharpeRatioCell.textContent = reviewData["Sharpe Ratio"];
-        row.appendChild(sharpeRatioCell);
-
-        var calmarRatioCell = document.createElement("td");
-        calmarRatioCell.textContent = reviewData["Calmar Ratio"];
-        row.appendChild(calmarRatioCell);
-        return row;
-    }
-
-    // Create the rows for both the strategy and benchmark
-    var strategyRow = createTableRow(asset1, strategytablereview);
-    var benchmarkRow = createTableRow(asset2, benchmarktablereview);
-
-    // Append the rows to the table body
-    tableBody.appendChild(strategyRow);
-    tableBody.appendChild(benchmarkRow);
-    
-    $(document).ready(function() {
-      // Check if DataTable is already initialized
-      if ($.fn.DataTable.isDataTable('#mettable')) {
-          // If DataTable is initialized, just clear and redraw it
-          $('#mettable').DataTable().clear();
-      } else {
-          // If DataTable is not initialized, initialize it
-          $('#mettable').DataTable({
-              "paging": false,
-              "searching": false,
-              "ordering": false,
-              "info": false,
-              "paging": false  // Optionally disable paging if height is limited
-          });
-        }
-    });
-
-    // Show the table if it was initially hidden
-    // document.getElementById("mettable").classList.remove("hide");
-
-
-}
-
-
-
-
-
-
-// Function to log Selected Date
-const logSelectedDate=()=> {
+const selectDate=()=> {
   const year = document.getElementById("year").value;
   const month = document.getElementById("month").value;
   const strategyname=document.getElementById("strategy").value;
@@ -293,8 +205,6 @@ const logSelectedDate=()=> {
   }
 }
 
-
-// Function to populate days dropdown based on selected month and year
 const populateDays=()=> {
   const month = document.getElementById("month").value;
   const year = document.getElementById("year").value;
@@ -308,7 +218,6 @@ const populateDays=()=> {
   }
 }
 
-// Function to populate years dropdown
 const populateYears=()=> {
   const yearsDropdown = document.getElementById("year");
   const currentYear = new Date().getFullYear();
@@ -323,44 +232,224 @@ const populateYears=()=> {
   }
 }
 
+const renderUpdateDate = () => {
+  fetch(`${window.origin}/api/ivdelta`)
+    .then(response => response.json())
+    .then(data => {
+      // Extract sysdate and find the latest one
+      const update = data.map(item => new Date(item.sysdate));
+
+      // Find the latest sysdate (most recent date)
+      const latestSysdate = new Date(Math.max(...update));
+
+      // Format the date in a readable format (adjust as needed)
+      const formattedDate = `${latestSysdate.getFullYear()}-${latestSysdate.getMonth() + 1}-${latestSysdate.getDate()}`;
+
+      // Render the latest date in the div with id="ivdate"
+      document.getElementById('ivdate').innerText = `Latest Update: ${formattedDate}`;
+
+      // console.log(`Latest Update : ${formattedDate}`);
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+};
+
+const renderMericTable =(strategytablereview,benchmarktablereview)=>{
+  var asset1 = "Strategy";
+  var asset2 = "Benchmark";
+  // Get a reference to the table body
+  var tableBody = document.querySelector("#mettable tbody");
+  // Clear all existing rows (td) from the table body
+  tableBody.innerHTML = ''; // 
+  // Function to create a table row with the given asset name and data
+  function createTableRow(assetName, reviewData) {
+      var row = document.createElement("tr");
+      // Create and append the columns for each row
+      var assetCell = document.createElement("td");
+      assetCell.textContent = assetName;
+      row.appendChild(assetCell);
+      var returnCell = document.createElement("td");
+      returnCell.textContent = reviewData["Return %"];
+      row.appendChild(returnCell);
+      var annualReturnCell = document.createElement("td");
+      annualReturnCell.textContent = reviewData["Comp. Annual Return"];
+      row.appendChild(annualReturnCell);
+
+      var maxDrawdownCell = document.createElement("td");
+      maxDrawdownCell.textContent = reviewData["Max Drawdown %"];
+      row.appendChild(maxDrawdownCell);
+
+      var maxDrawdownDateCell = document.createElement("td");
+      maxDrawdownDateCell.textContent = new Date(reviewData["Max Drawdown % Date"]).toLocaleDateString();
+      row.appendChild(maxDrawdownDateCell);
+
+      var returnDrawdownRatioCell = document.createElement("td");
+      returnDrawdownRatioCell.textContent = reviewData["Return%/Max Drawdown%"];
+      row.appendChild(returnDrawdownRatioCell);
+
+      var stdDevCell = document.createElement("td");
+      stdDevCell.textContent = reviewData["Std"];
+      row.appendChild(stdDevCell);
+
+      var sharpeRatioCell = document.createElement("td");
+      sharpeRatioCell.textContent = reviewData["Sharpe Ratio"];
+      row.appendChild(sharpeRatioCell);
+
+      var calmarRatioCell = document.createElement("td");
+      calmarRatioCell.textContent = reviewData["Calmar Ratio"];
+      row.appendChild(calmarRatioCell);
+      return row;
+  }
+
+  // Create the rows for both the strategy and benchmark
+  var strategyRow = createTableRow(asset1, strategytablereview);
+  var benchmarkRow = createTableRow(asset2, benchmarktablereview);
+
+  // Append the rows to the table body
+  tableBody.appendChild(strategyRow);
+  tableBody.appendChild(benchmarkRow);
+  
+  $(document).ready(function() {
+    // Check if DataTable is already initialized
+    if ($.fn.DataTable.isDataTable('#mettable')) {
+        // If DataTable is initialized, just clear and redraw it
+        $('#mettable').DataTable().clear();
+    } else {
+        // If DataTable is not initialized, initialize it
+        $('#mettable').DataTable({
+            "paging": false,
+            "searching": false,
+            "ordering": false,
+            "info": false,
+            "paging": false  // Optionally disable paging if height is limited
+        });
+      }
+  });
+
+  // Show the table if it was initially hidden
+  // document.getElementById("mettable").classList.remove("hide");
+
+
+}
+
+const renderReturn=()=>{
+  // Populate months dropdown &  Populate years dropdown on page load
+  const monthsDropdown = document.getElementById("month");
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+  for (let i = 0; i < months.length; i++) {
+    const option = document.createElement("option");
+    option.text = months[i];
+    option.value = i+1;
+    monthsDropdown.add(option);
+  }// Event listeners to trigger population of days dropdown when month or year changes
+  document.getElementById("month").addEventListener("change", populateDays);
+  document.getElementById("year").addEventListener("change", populateDays);
+  populateYears();
+
+
+  // Set default year and month values
+  const defaultstrategy="COPPOCK"
+  const defaultYear = new Date().getFullYear()-1;
+  const defaultMonth = new Date().getMonth()+1  ; // Month is zero-indexed, so we add 1 to get the correct month
+  document.getElementById('year').value = defaultYear;
+  document.getElementById('month').value = defaultMonth;
+  // console.log(defaultYear,defaultMonth,defaultstrategy)
+  fetchData(defaultstrategy,defaultYear, defaultMonth);
+}
+
+const renderIvDelta=()=>{
+  fetch(`${window.origin}/api/ivdelta`)
+  .then(response => response.json())
+  .then(data => {
+      // Extract the relevant data for the chart
+      // Assuming API returns a list of objects with date, value, and delta
+      const dates = data.map(item => item.date);    // X-axis: dates
+      const values = data.map(item => item.value);  // Y-axis: values
+      const deltas = data.map(item => item.delta);  // Secondary Y-axis: deltas (optional)
+
+      // Initialize the ECharts instance
+      const chart = echarts.init(document.getElementById('ivdelta'));
+
+      // Specify the chart configuration
+      const option = {
+          title: {
+              text: 'SPY IV 25% Delta Data'
+          },
+          tooltip: {
+              trigger: 'axis'
+          },
+          xAxis: {
+              type: 'category',
+              data: dates,
+              axisLabel: {
+                  rotate: 45,  // Rotate labels if they overlap
+                  formatter: function(value) {
+                      // Format date if needed
+                      const date = new Date(value);
+                      return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+                  }
+              }
+          },
+          yAxis: [
+              {
+                  type: 'value',
+                  name: 'Value',
+                  min:500
+              },
+              {
+                  type: 'value',
+                  name: 'Delta',
+                  position: 'right',
+                  offset: 60  // Offset to the right to display the secondary axis
+              }
+          ],
+          series: [
+              {
+                  name: 'Value',
+                  type: 'line',
+                  data: values,
+                  smooth: true,
+                  yAxisIndex: 0  // Link to the first Y-axis
+              },
+              {
+                  name: 'Delta',
+                  type: 'line',
+                  data: deltas,
+                  smooth: true,
+                  yAxisIndex: 1,  // Link to the secondary Y-axis
+                  lineStyle: {
+                      type: 'dashed'  // Optional: make delta line dashed for distinction
+                  }
+              }
+          ]
+      };
+
+      // Use the specified configuration and data to display the chart
+      chart.setOption(option);
+  })
+  .catch(error => {
+      console.error('Error fetching data:', error);
+  });
+}
+
 
 
 // Check token validity and fetch data if valid
 const token = localStorage.getItem('token');
 const tokenExpiration = localStorage.getItem('tokenExpiration');
-// console.log('localstorage',token)
-console.log('localstorage time',tokenExpiration)
+console.log('LocalStorage ',tokenExpiration)
 
-// Populate months dropdown &  Populate years dropdown on page load
-const monthsDropdown = document.getElementById("month");
-const months = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
-for (let i = 0; i < months.length; i++) {
-  const option = document.createElement("option");
-  option.text = months[i];
-  option.value = i+1;
-  monthsDropdown.add(option);
-}// Event listeners to trigger population of days dropdown when month or year changes
-document.getElementById("month").addEventListener("change", populateDays);
-document.getElementById("year").addEventListener("change", populateDays);
-populateYears();
-
-
-// Set default year and month values
-const defaultstrategy="COPPOCK"
-const defaultYear = new Date().getFullYear()-1;
-const defaultMonth = new Date().getMonth()+1  ; // Month is zero-indexed, so we add 1 to get the correct month
-document.getElementById('year').value = defaultYear;
-document.getElementById('month').value = defaultMonth;
-// console.log(defaultYear,defaultMonth,defaultstrategy)
-fetchData(defaultstrategy,defaultYear, defaultMonth);
+renderReturn()
+renderIvDelta()
+renderUpdateDate()
 
 // Add click event listener to the button
-document.getElementById("logDateButton").addEventListener("click", logSelectedDate);
-
-
+// Signout Redirect 
+document.getElementById("logDateButton").addEventListener("click", selectDate);
 if (localStorage.getItem('signoutTriggered')=="false") {
   localStorage.removeItem('signoutTriggered')
 }

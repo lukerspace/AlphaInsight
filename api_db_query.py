@@ -283,5 +283,3 @@ def select_iv_delta():
 
     return data
 
-
-# select_iv_delta()
