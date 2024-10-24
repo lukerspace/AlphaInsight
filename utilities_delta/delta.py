@@ -14,8 +14,9 @@ from datetime import datetime, timedelta
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
-
-
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 
 load_dotenv()
 print(os.getenv("SERVER_HOST"))
@@ -31,11 +32,23 @@ def conncection_database():
     cursor = conn.cursor()
     return cursor,conn
 
+
 def iv_spread_scarp_25(ticker):
     option = Options()
-    # option.add_argument('--headless')
-    driver = webdriver.Chrome(options=option)
+    option.add_argument('--headless')  # Uncomment this for headless mode
+    option.add_argument('--no-sandbox')
+    option.add_argument('--window-size=1920,1080')
+    option.add_argument('--disable-dev-shm-usage')
+    option.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) " \
+                "AppleWebKit/537.36 (KHTML, like Gecko) " \
+                "Chrome/115.0.0.0 Safari/537.36")
     
+    # Initialize the WebDriver with both service and options
+    # Use WebDriverManager to install a specific version of ChromeDriver
+    service = Service(ChromeDriverManager(driver_version="130.0.6723.58").install())
+    driver = webdriver.Chrome(service=service, options=option)
+    # driver=webdriver.Chrome(options=option)
+
     ticker=ticker.upper()
     url="https://marketchameleon.com/Overview/{}/VolatilitySkew/".format(ticker)
     driver.get(url)

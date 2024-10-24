@@ -9,6 +9,35 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED=1
 
+
+# Set environment variable to avoid issues with root user in Chrome
+ENV PYTHONUNBUFFERED=1 \
+    DEBIAN_FRONTEND=noninteractive \
+    DISPLAY=:99
+
+# Install necessary packages: nano, ping, crontab, and dependencies for Chromium
+RUN apt-get update && apt-get install -y \
+    nano \
+    iputils-ping \
+    cron \
+    wget \
+    curl \
+    unzip \
+    chromium \
+    chromium-driver \
+    libglib2.0-0 \
+    libnss3 \
+    libgconf-2-4 \
+    libfontconfig1 \
+    libxrender1 \
+    libxss1 \
+    libxtst6 \
+    libxi6 \
+    libappindicator1 \
+    xdg-utils \
+    --no-install-recommends && \
+    rm -rf /var/lib/apt/lists/*
+
 # Install pip requirements
 COPY requirements.txt .
 RUN python -m pip install -r requirements.txt
