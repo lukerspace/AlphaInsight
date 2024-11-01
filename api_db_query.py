@@ -185,6 +185,7 @@ def select_coppock_data():
             row_value.append(v)
             nested_json[m]=row_value
                 # print(m,t,v)
+    print(nested_json)
     return nested_json
 
 
@@ -239,6 +240,8 @@ def select_coppock_ratio():
             row_value.append(v)
             nested_json[m]=row_value
                 # print(m,t,v)
+
+    print(nested_json)
     return nested_json
 
 

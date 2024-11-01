@@ -11,7 +11,7 @@ docker-compose.override.yml
 *.tmp
 
 # Ignore specific folders (adjust folder names as per your structure)
-utilities_update_nav/
+update/
 
 # Ignore virtual environments (Python example)
 venv/
