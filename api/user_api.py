@@ -78,8 +78,7 @@ def signup():
 
 @appUser.route('/user', methods=['PATCH'])
 def signin():
-
-    try:
+    # try:
         conn =mysql.connector.connect(host = os.getenv("SERVER_HOST"),user=os.getenv("SERVER_USER"),password=os.getenv("SERVER_PASSWORD"), database = "dashboard",charset = "utf8",auth_plugin='caching_sha2_password')
         conn.reconnect(attempts=1, delay=0)
         data = request.json
@@ -127,13 +126,12 @@ def signin():
             return jsonify(data), 200
 
     # 伺服器錯誤
-    except:
-        data = {
-            "error": True,
-            "message": "伺服器內部錯誤"
-        }
-        print("got error====>")
-        return jsonify(data), 500
+    # except:
+    #     data = {
+    #         "error": True,
+    #         "message": "伺服器內部錯誤"
+    #     }
+    #     return jsonify(data), 500
 
 
 @appUser.route('/user', methods=['DELETE'])
