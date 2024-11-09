@@ -10,6 +10,8 @@ function signinCheck() {
           document.getElementById("bh").classList.remove("hide");
           document.getElementById("ivdelta").classList.remove("hide");
           document.getElementById("ivdate").classList.remove("hide");
+          document.getElementById("netgex").classList.remove("hide");
+          document.getElementById("gexwall").classList.remove("hide");
           document.getElementById("mettable").classList.remove("hide");
           document.getElementById("dateselector").classList.remove("hide");
           document.getElementById("strategyselector").classList.remove("hide");

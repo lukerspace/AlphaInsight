@@ -286,3 +286,72 @@ def select_iv_delta():
 
     return data
 
+
+
+
+
+def select_daily_performance():
+    conn=mysql.connector.connect(
+        host = os.getenv("SERVER_HOST"),user=os.getenv("SERVER_USER"),
+        password=os.getenv("SERVER_PASSWORD"),database = "dashboard",
+        charset = "utf8",auth_plugin='caching_sha2_password'
+    )
+    cursor = conn.cursor()
+    sql="select * from daily_performance"
+    cursor.execute(sql)
+    my_data=cursor.fetchall()
+    column_names = [desc[0] for desc in cursor.description]
+    result = [dict(zip(column_names, row)) for row in my_data]
+    # Convert the result to JSON in str
+    json_data = json.dumps(result, default=str)  # Use default=str to handle non-serializable objects like datetime
+    # Load the JSON data
+    data = json.loads(json_data)
+
+    return data
+
+
+def select_spy_gex_wall():
+    conn=mysql.connector.connect(
+        host = os.getenv("SERVER_HOST"),user=os.getenv("SERVER_USER"),
+        password=os.getenv("SERVER_PASSWORD"),database = "dashboard",
+        charset = "utf8",auth_plugin='caching_sha2_password'
+    )
+    cursor = conn.cursor()
+    sql = """ SELECT * FROM spy_gex_wall """
+    cursor.execute(sql)
+    my_data=cursor.fetchall()
+    column_names = [desc[0] for desc in cursor.description]
+    result = [dict(zip(column_names, row)) for row in my_data]
+    records=(pd.DataFrame(result).sort_values("date")).to_dict(orient='records')
+    # Convert the result to JSON in str
+    # json_data = json.dumps(result, default=str)  # Use default=str to handle non-serializable objects like datetime
+    # # Load the JSON data
+
+    records = pd.DataFrame(result).sort_values("price").to_dict(orient='records')
+
+    json_data = json.dumps(records,default=str)
+    data = json.loads(json_data)
+    return data
+
+
+def select_spy_net_gex():
+    conn=mysql.connector.connect(
+        host = os.getenv("SERVER_HOST"),user=os.getenv("SERVER_USER"),
+        password=os.getenv("SERVER_PASSWORD"),database = "dashboard",
+        charset = "utf8",auth_plugin='caching_sha2_password'
+    )
+    cursor = conn.cursor()
+    sql = """ SELECT * FROM spy_net_gex order by date DESC LIMIT 100 """
+
+    cursor.execute(sql)
+    my_data=cursor.fetchall()
+    column_names = [desc[0] for desc in cursor.description]
+    result = [dict(zip(column_names, row)) for row in my_data]
+    records=(pd.DataFrame(result).sort_values("date")).to_dict(orient='records')
+    # Convert the result to JSON in str
+    # json_data = json.dumps(result, default=str)  # Use default=str to handle non-serializable objects like datetime
+    # # Load the JSON data
+    json_data = json.dumps(records,default=str)
+    data = json.loads(json_data)
+    return data
+

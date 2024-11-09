@@ -251,7 +251,8 @@ const renderUpdateDate = () => {
       // console.log(`Latest Update : ${formattedDate}`);
     })
     .catch(error => {
-      console.error('Error fetching data:', error);
+      return
+      // console.error('Error fetching data:', error);
     });
 };
 
@@ -432,15 +433,216 @@ const renderIvDelta=()=>{
       chart.setOption(option);
   })
   .catch(error => {
-      console.error('Error fetching data:', error);
+    return
+      // console.error('Error fetching data:', error);
   });
+}
+
+const renderGexWall = () => {
+  fetch(`${window.origin}/api/spy_gex_wall`)
+    .then(response => response.json())
+    .then(data => {
+      // Extract the relevant data for the chart
+      const dates = data.map(item => item.date);  // Dates for the title
+      let strikeprice = data.map(item => parseFloat(item.price));  // X-axis: strike prices
+      let totalgamma = data.map(item => parseFloat(item.totalgamma));  // Y-axis: total gamma
+      const spot = parseFloat(data[0].spot);  // Convert the first spot value to a float
+
+      console.log('Date:', dates[0]);
+      console.log('Spot:', spot);
+
+      // **Round all numerical values to one decimal place**
+      strikeprice = strikeprice.map(sp => parseFloat(sp.toFixed(1)));
+      totalgamma = totalgamma.map(tg => parseFloat(tg.toFixed(1)));
+      const roundedSpot = parseFloat(spot.toFixed(1));
+
+      // **Calculate the original maximum totalgamma value (excluding the spot)**
+      const originalMaxY = Math.max(...totalgamma);
+
+      // **Calculate the new maxY so that originalMaxY occupies 80% of the chart's height**
+      const maxY = parseFloat((originalMaxY / 0.8).toFixed(1));  // Round to one decimal place
+
+      // **Add the spot value to the strikeprice list if not already present**
+      if (!strikeprice.includes(roundedSpot)) {
+        strikeprice.push(roundedSpot);
+        totalgamma.push(maxY);  // Assign maxY as the totalgamma for the spot
+      }
+
+      // **Sort the strikeprice and totalgamma arrays together**
+      const combinedData = strikeprice.map((sp, index) => ({
+        strikeprice: sp,
+        totalgamma: totalgamma[index]
+      }));
+      combinedData.sort((a, b) => a.strikeprice - b.strikeprice);
+
+      // **Separate the sorted data back into arrays and round values to one decimal place**
+      strikeprice = combinedData.map(item => item.strikeprice.toFixed(1));
+      totalgamma = combinedData.map(item => item.totalgamma);
+
+      // Initialize the ECharts instance
+      const chart = echarts.init(document.getElementById('gexwall'));
+
+      // **Specify the chart configuration**
+      const option = {
+        title: {
+          text: 'SPY Gamma Exposure Wall on ' + dates[0].slice(0, 10)  + " / Spot Price at " + (spot) // Display as "on YYYY-MM-DD"
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'  // Highlight the bars
+          },
+          formatter: function(params) {
+            const param = params[0];
+            const strikePrice = parseFloat(param.name);
+            const totalGamma = param.value;
+            // **If this is the spot bar, show NaN**
+            if (strikePrice === roundedSpot) {
+              return `Strike Price: ${param.name}<br/>Total Gamma: NaN`;
+            } else {
+              return `Strike Price: ${param.name}<br/>Total Gamma: ${totalGamma}`;
+            }
+          }
+        },
+        xAxis: {
+          type: 'category',
+          name: 'Strike Price',
+          data: strikeprice,
+          axisLabel: {
+            rotate: 45
+          }
+        },
+        yAxis: {
+          type: 'value',
+          name: 'Total Gamma',
+          max: maxY,  // **Set the maximum value of Y-axis to maxY**
+          axisLabel: {
+            showMaxLabel: false,  // Hide the maximum value label
+            formatter: function(value) {
+              return value.toFixed(1);  // **Round Y-axis labels to one decimal place**
+            }
+          }
+        },
+        series: [
+          {
+            name: 'Total Gamma',
+            type: 'bar',
+            data: totalgamma,
+            barWidth: '90%',  // Adjust the bar width as needed
+            itemStyle: {
+              color: function(params) {
+                const strikePrice = parseFloat(strikeprice[params.dataIndex]);
+                // **Change the color of the spot bar to red**
+                if (strikePrice === roundedSpot) {
+                  return '#ff0000';  // Spot bar color
+                }
+                return '#5470c6';     // Default bar color
+              }
+            }
+          }
+        ]
+      };
+
+      // **Use the specified configuration and data to display the chart**
+      chart.setOption(option);
+    })
+    .catch(error => {
+      return
+      // console.error('Error fetching data:', error);
+    });
+};
+
+const renderNetGamma = () => {
+  fetch(`${window.origin}/api/spy_net_gex`)
+    .then(response => response.json())
+    .then(data => {
+      // Extract the relevant data for the chart
+      const dates = data.map(item => item.date);    // X-axis: dates
+      const daily_gamma = data.map(item => item.daily_gamma);  // Y-axis: values
+      const price = data.map(item => item.price);  // Secondary Y-axis: deltas (optional)
+
+      // Initialize the ECharts instance
+      const chart = echarts.init(document.getElementById('netgex'));
+
+      // Specify the chart configuration
+      const option = {
+          title: {
+              text: 'SPY Daily Net Gamma & Price'
+          },
+          tooltip: {
+              trigger: 'axis'
+          },
+          xAxis: {
+              type: 'category',
+              data: dates,
+              axisLabel: {
+                  rotate: 45,  // Rotate labels if they overlap
+                  formatter: function(value) {
+                      // Format date if needed
+                      const date = new Date(value);
+                      return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+                  }
+              }
+          },
+          yAxis: [
+              {
+                  type: 'value',
+                  name: 'Gamma',
+              },
+              {
+                  type: 'value',
+                  name: 'Price',
+                  position: 'right',
+                  min: 500  // Set a minimum for better scaling
+              }
+          ],
+          series: [
+              {
+                  name: 'Gamma',
+                  type: 'line',
+                  data: daily_gamma,
+                  smooth: true,
+                  yAxisIndex: 0,  // Link to the first Y-axis
+                  lineStyle: {
+                      color: 'purple',
+                      width: 3,  // Adjust line width for style differentiation
+                  },
+                  itemStyle: {
+                      color: 'purple'
+                  }
+              },
+              {
+                  name: 'Price',
+                  type: 'line',
+                  data: price,
+                  smooth: true,
+                  yAxisIndex: 1,  // Link to the secondary Y-axis
+                  lineStyle: {
+                      color: 'violet',
+                      width: 2,  // Adjust line width for style differentiation
+                      type: 'solid'  // Solid line style that is not dashed
+                  },
+                  itemStyle: {
+                      color: 'violet'
+                  }
+              }
+          ]
+      };
+
+      // Use the specified configuration and data to display the chart
+      chart.setOption(option);
+    })
+    .catch(error => {
+      return
+      // console.error('Error fetching data:', error);
+    });
 }
 
 
 
 
 
-
+// Main Section
 // Check token validity and fetch data if valid
 const token = localStorage.getItem('token');
 const tokenExpiration = localStorage.getItem('tokenExpiration');
@@ -448,6 +650,9 @@ console.log('LocalStorage ',tokenExpiration)
 renderReturn()
 renderIvDelta()
 renderUpdateDate()
+renderGexWall()
+renderNetGamma()
+
 
 // Add click event listener to the button
 // Signout Redirect 
