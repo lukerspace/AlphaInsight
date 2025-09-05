@@ -1,17 +1,17 @@
 <div id="top">
 
-<!-- HEADER STYLE: CLASSIC -->
 
-# ALPHAINSIGHT!
-### Strategy Visualization 
+<img src="readmeai/assets/logos/purple.svg" width="30%" style="position: relative; top: 0; right: 0;" alt="Project Logo"/>
+
+# ALPHAINSIGHT
 
 <em></em>
 
 <!-- BADGES -->
-<img src="https://img.shields.io/github/license/lukerspace/App?style=default&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
-<img src="https://img.shields.io/github/last-commit/lukerspace/App?style=default&logo=git&logoColor=white&color=0080ff" alt="last-commit">
-<img src="https://img.shields.io/github/languages/top/lukerspace/App?style=default&color=0080ff" alt="repo-top-language">
-<img src="https://img.shields.io/github/languages/count/lukerspace/App?style=default&color=0080ff" alt="repo-language-count">
+<img src="https://img.shields.io/github/license/lukerspace/Alphainsight?style=default&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
+<img src="https://img.shields.io/github/last-commit/lukerspace/Alphainsight?style=default&logo=git&logoColor=white&color=0080ff" alt="last-commit">
+<img src="https://img.shields.io/github/languages/top/lukerspace/Alphainsight?style=default&color=0080ff" alt="repo-top-language">
+<img src="https://img.shields.io/github/languages/count/lukerspace/Alphainsight?style=default&color=0080ff" alt="repo-language-count">
 
 <!-- default option, no dependency badges. -->
 
@@ -57,14 +57,16 @@ ALPHAINSIGHT is a lightweight strategy monitoring platform with the following ke
 🔐 Secure Access – Includes a member authentication system for identity verification.
 
 ⚡ Lightweight Evaluation – Provides a streamlined environment for strategy analysis and monitoring.
+
 ---
 
 ## Project Structure
 
 ```sh
-└── App/
+└── Alphainsight/
     ├── README.md
     ├── api
+    │   ├── .DS_Store
     │   ├── nav_api.py
     │   └── user_api.py
     ├── app.py
@@ -89,7 +91,7 @@ ALPHAINSIGHT is a lightweight strategy monitoring platform with the following ke
 ### Project Index
 
 <details open>
-	<summary><b><code>APP/</code></b></summary>
+	<summary><b><code>ALPHAINSIGHT/</code></b></summary>
 	<!-- __root__ Submodule -->
 	<details>
 		<summary><b>__root__</b></summary>
@@ -104,15 +106,15 @@ ALPHAINSIGHT is a lightweight strategy monitoring platform with the following ke
 				</tr>
 			</thead>
 				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/App/blob/master/database.py'>database.py</a></b></td>
+					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/Alphainsight/blob/master/database.py'>database.py</a></b></td>
 					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
 				</tr>
 				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/App/blob/master/redis_clients.py'>redis_clients.py</a></b></td>
+					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/Alphainsight/blob/master/redis_clients.py'>redis_clients.py</a></b></td>
 					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
 				</tr>
 				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/App/blob/master/app.py'>app.py</a></b></td>
+					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/Alphainsight/blob/master/app.py'>app.py</a></b></td>
 					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
 				</tr>
 			</table>
@@ -132,15 +134,15 @@ ALPHAINSIGHT is a lightweight strategy monitoring platform with the following ke
 				</tr>
 			</thead>
 				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/App/blob/master/update_pseudo_data/sqlite_update_spy.py'>sqlite_update_spy.py</a></b></td>
+					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/Alphainsight/blob/master/update_pseudo_data/sqlite_update_spy.py'>sqlite_update_spy.py</a></b></td>
 					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
 				</tr>
 				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/App/blob/master/update_pseudo_data/default_sqlite.py'>default_sqlite.py</a></b></td>
+					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/Alphainsight/blob/master/update_pseudo_data/default_sqlite.py'>default_sqlite.py</a></b></td>
 					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
 				</tr>
 				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/App/blob/master/update_pseudo_data/sqlite_update_nav.py'>sqlite_update_nav.py</a></b></td>
+					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/Alphainsight/blob/master/update_pseudo_data/sqlite_update_nav.py'>sqlite_update_nav.py</a></b></td>
 					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
 				</tr>
 			</table>
@@ -160,11 +162,11 @@ ALPHAINSIGHT is a lightweight strategy monitoring platform with the following ke
 				</tr>
 			</thead>
 				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/App/blob/master/api/user_api.py'>user_api.py</a></b></td>
+					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/Alphainsight/blob/master/api/user_api.py'>user_api.py</a></b></td>
 					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
 				</tr>
 				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/App/blob/master/api/nav_api.py'>nav_api.py</a></b></td>
+					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/Alphainsight/blob/master/api/nav_api.py'>nav_api.py</a></b></td>
 					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
 				</tr>
 			</table>
@@ -184,11 +186,11 @@ ALPHAINSIGHT is a lightweight strategy monitoring platform with the following ke
 				</tr>
 			</thead>
 				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/App/blob/master/templates/basic.html'>basic.html</a></b></td>
+					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/Alphainsight/blob/master/templates/basic.html'>basic.html</a></b></td>
 					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
 				</tr>
 				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/App/blob/master/templates/index.html'>index.html</a></b></td>
+					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/Alphainsight/blob/master/templates/index.html'>index.html</a></b></td>
 					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
 				</tr>
 			</table>
@@ -208,107 +210,50 @@ This project requires the following dependencies:
 
 ### Installation
 
-Build App from the source and intsall dependencies:
+Build Alphainsight from the source and intsall dependencies:
 
 1. **Clone the repository:**
 
     ```sh
-    ❯ git clone https://github.com/lukerspace/App
+    ❯ git clone https://github.com/lukerspace/Alphainsight
     ```
 
 2. **Navigate to the project directory:**
 
     ```sh
-    ❯ cd App
+    ❯ cd Alphainsight
     ```
 
 3. **Install the dependencies:**
 
-echo 'INSERT-INSTALL-COMMAND-HERE'
+   pip install -r 'requirement.txt'
 
 ### Usage
 
 Run the project with:
 
-echo 'INSERT-RUN-COMMAND-HERE'
-
-### Testing
-
-App uses the {__test_framework__} test framework. Run the test suite with:
-
-echo 'INSERT-TEST-COMMAND-HERE'
-
----
-
-## Roadmap
-
-- [X] **`Task 1`**: <strike>Implement feature one.</strike>
-- [ ] **`Task 2`**: Implement feature two.
-- [ ] **`Task 3`**: Implement feature three.
-
----
-
-## Contributing
-
-- **💬 [Join the Discussions](https://github.com/lukerspace/App/discussions)**: Share your insights, provide feedback, or ask questions.
-- **🐛 [Report Issues](https://github.com/lukerspace/App/issues)**: Submit bugs found or log feature requests for the `App` project.
-- **💡 [Submit Pull Requests](https://github.com/lukerspace/App/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
-
-<details closed>
-<summary>Contributing Guidelines</summary>
-
-1. **Fork the Repository**: Start by forking the project repository to your github account.
-2. **Clone Locally**: Clone the forked repository to your local machine using a git client.
-   ```sh
-   git clone https://github.com/lukerspace/App
-   ```
-3. **Create a New Branch**: Always work on a new branch, giving it a descriptive name.
-   ```sh
-   git checkout -b new-feature-x
-   ```
-4. **Make Your Changes**: Develop and test your changes locally.
-5. **Commit Your Changes**: Commit with a clear message describing your updates.
-   ```sh
-   git commit -m 'Implemented new feature x.'
-   ```
-6. **Push to github**: Push the changes to your forked repository.
-   ```sh
-   git push origin new-feature-x
-   ```
-7. **Submit a Pull Request**: Create a PR against the original project repository. Clearly describe the changes and their motivations.
-8. **Review**: Once your PR is reviewed and approved, it will be merged into the main branch. Congratulations on your contribution!
-</details>
-
-<details closed>
-<summary>Contributor Graph</summary>
-<br>
-<p align="left">
-   <a href="https://github.com{/lukerspace/App/}graphs/contributors">
-      <img src="https://contrib.rocks/image?repo=lukerspace/App">
-   </a>
-</p>
-</details>
-
----
-
-## License
-
-App is protected under the [LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
-
----
-
-## Acknowledgments
-
-- Credit `contributors`, `inspiration`, `references`, etc.
-
-<div align="right">
-
-[![][back-to-top]](#top)
-
-</div>
+python run app.py
 
 
-[back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
+When the server starts, the application will automatically trigger the init_schema function from update_pseudo_data, which:
+
+Creates the SQLite database schema
+
+Populates the database with initial sample data
+
+Since the project is designed for lightweight usage, it does not rely on an external database but instead uses SQLite for easy deployment.
+
+After deployment:
+
+Create a new user account through the web interface.
+
+Interact with the platform directly.
+
+You will be able to view the default strategy (NVDA Buy & Hold) alongside the benchmark SPY, including recent performance comparisons and backtesting results.
 
 
----
+
+![Dashboard Preview](static/pic/readme1.png "ALPHAINSIGHT Dashboard")
+
+
+
