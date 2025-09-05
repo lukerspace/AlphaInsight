@@ -1,20 +1,21 @@
 <div id="top">
 
 <!-- HEADER STYLE: CLASSIC -->
-<div align="center">
 
-<img src="readmeai/assets/logos/purple.svg" width="30%" style="position: relative; top: 0; right: 0;" alt="Project Logo"/>
-
-# <code>❯ REPLACE-ME</code>
+# Strategy Visualization Dashboard
 
 <em></em>
 
 <!-- BADGES -->
-<!-- local repository, no metadata badges. -->
+<img src="https://img.shields.io/github/license/lukerspace/App?style=default&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
+<img src="https://img.shields.io/github/last-commit/lukerspace/App?style=default&logo=git&logoColor=white&color=0080ff" alt="last-commit">
+<img src="https://img.shields.io/github/languages/top/lukerspace/App?style=default&color=0080ff" alt="repo-top-language">
+<img src="https://img.shields.io/github/languages/count/lukerspace/App?style=default&color=0080ff" alt="repo-language-count">
 
-<em>Built with the tools and technologies:</em>
+<!-- default option, no dependency badges. -->
 
-<img src="https://img.shields.io/badge/Python-3776AB.svg?style=default&logo=Python&logoColor=white" alt="Python">
+
+<!-- default option, no dependency badges. -->
 
 </div>
 <br>
@@ -55,21 +56,13 @@
 ## Project Structure
 
 ```sh
-└── /
-    ├── __pycache__
-    │   ├── api_db_query.cpython-312.pyc
-    │   ├── database.cpython-312.pyc
-    │   ├── redis_clients.cpython-312.pyc
-    │   └── sqlite_init.cpython-312.pyc
+└── App/
+    ├── README.md
     ├── api
-    │   ├── __pycache__
     │   ├── nav_api.py
     │   └── user_api.py
     ├── app.py
     ├── database.py
-    ├── lib
-    │   ├── __pycache__
-    │   └── utilities.py
     ├── redis_clients.py
     ├── sqlite.db
     ├── static
@@ -82,7 +75,6 @@
     │   ├── basic.html
     │   └── index.html
     └── update_pseudo_data
-        ├── __pycache__
         ├── default_sqlite.py
         ├── sqlite_update_nav.py
         └── sqlite_update_spy.py
@@ -91,7 +83,7 @@
 ### Project Index
 
 <details open>
-	<summary><b><code>/</code></b></summary>
+	<summary><b><code>APP/</code></b></summary>
 	<!-- __root__ Submodule -->
 	<details>
 		<summary><b>__root__</b></summary>
@@ -106,15 +98,15 @@
 				</tr>
 			</thead>
 				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/database.py'>database.py</a></b></td>
+					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/App/blob/master/database.py'>database.py</a></b></td>
 					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
 				</tr>
 				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/redis_clients.py'>redis_clients.py</a></b></td>
+					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/App/blob/master/redis_clients.py'>redis_clients.py</a></b></td>
 					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
 				</tr>
 				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/app.py'>app.py</a></b></td>
+					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/App/blob/master/app.py'>app.py</a></b></td>
 					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
 				</tr>
 			</table>
@@ -134,35 +126,15 @@
 				</tr>
 			</thead>
 				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/update_pseudo_data/sqlite_update_spy.py'>sqlite_update_spy.py</a></b></td>
+					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/App/blob/master/update_pseudo_data/sqlite_update_spy.py'>sqlite_update_spy.py</a></b></td>
 					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
 				</tr>
 				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/update_pseudo_data/default_sqlite.py'>default_sqlite.py</a></b></td>
+					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/App/blob/master/update_pseudo_data/default_sqlite.py'>default_sqlite.py</a></b></td>
 					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
 				</tr>
 				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/update_pseudo_data/sqlite_update_nav.py'>sqlite_update_nav.py</a></b></td>
-					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-				</tr>
-			</table>
-		</blockquote>
-	</details>
-	<!-- lib Submodule -->
-	<details>
-		<summary><b>lib</b></summary>
-		<blockquote>
-			<div class='directory-path' style='padding: 8px 0; color: #666;'>
-				<code><b>⦿ lib</b></code>
-			<table style='width: 100%; border-collapse: collapse;'>
-			<thead>
-				<tr style='background-color: #f8f9fa;'>
-					<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-					<th style='text-align: left; padding: 8px;'>Summary</th>
-				</tr>
-			</thead>
-				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/lib/utilities.py'>utilities.py</a></b></td>
+					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/App/blob/master/update_pseudo_data/sqlite_update_nav.py'>sqlite_update_nav.py</a></b></td>
 					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
 				</tr>
 			</table>
@@ -182,11 +154,11 @@
 				</tr>
 			</thead>
 				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/api/user_api.py'>user_api.py</a></b></td>
+					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/App/blob/master/api/user_api.py'>user_api.py</a></b></td>
 					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
 				</tr>
 				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/api/nav_api.py'>nav_api.py</a></b></td>
+					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/App/blob/master/api/nav_api.py'>nav_api.py</a></b></td>
 					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
 				</tr>
 			</table>
@@ -206,11 +178,11 @@
 				</tr>
 			</thead>
 				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/templates/basic.html'>basic.html</a></b></td>
+					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/App/blob/master/templates/basic.html'>basic.html</a></b></td>
 					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
 				</tr>
 				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/templates/index.html'>index.html</a></b></td>
+					<td style='padding: 8px;'><b><a href='https://github.com/lukerspace/App/blob/master/templates/index.html'>index.html</a></b></td>
 					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
 				</tr>
 			</table>
@@ -230,18 +202,18 @@ This project requires the following dependencies:
 
 ### Installation
 
-Build  from the source and intsall dependencies:
+Build App from the source and intsall dependencies:
 
 1. **Clone the repository:**
 
     ```sh
-    ❯ git clone ../
+    ❯ git clone https://github.com/lukerspace/App
     ```
 
 2. **Navigate to the project directory:**
 
     ```sh
-    ❯ cd 
+    ❯ cd App
     ```
 
 3. **Install the dependencies:**
@@ -256,7 +228,7 @@ echo 'INSERT-RUN-COMMAND-HERE'
 
 ### Testing
 
- uses the {__test_framework__} test framework. Run the test suite with:
+App uses the {__test_framework__} test framework. Run the test suite with:
 
 echo 'INSERT-TEST-COMMAND-HERE'
 
@@ -272,17 +244,17 @@ echo 'INSERT-TEST-COMMAND-HERE'
 
 ## Contributing
 
-- **💬 [Join the Discussions](https://LOCAL///discussions)**: Share your insights, provide feedback, or ask questions.
-- **🐛 [Report Issues](https://LOCAL///issues)**: Submit bugs found or log feature requests for the `` project.
-- **💡 [Submit Pull Requests](https://LOCAL///blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
+- **💬 [Join the Discussions](https://github.com/lukerspace/App/discussions)**: Share your insights, provide feedback, or ask questions.
+- **🐛 [Report Issues](https://github.com/lukerspace/App/issues)**: Submit bugs found or log feature requests for the `App` project.
+- **💡 [Submit Pull Requests](https://github.com/lukerspace/App/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
 
 <details closed>
 <summary>Contributing Guidelines</summary>
 
-1. **Fork the Repository**: Start by forking the project repository to your LOCAL account.
+1. **Fork the Repository**: Start by forking the project repository to your github account.
 2. **Clone Locally**: Clone the forked repository to your local machine using a git client.
    ```sh
-   git clone ./
+   git clone https://github.com/lukerspace/App
    ```
 3. **Create a New Branch**: Always work on a new branch, giving it a descriptive name.
    ```sh
@@ -293,7 +265,7 @@ echo 'INSERT-TEST-COMMAND-HERE'
    ```sh
    git commit -m 'Implemented new feature x.'
    ```
-6. **Push to LOCAL**: Push the changes to your forked repository.
+6. **Push to github**: Push the changes to your forked repository.
    ```sh
    git push origin new-feature-x
    ```
@@ -305,8 +277,8 @@ echo 'INSERT-TEST-COMMAND-HERE'
 <summary>Contributor Graph</summary>
 <br>
 <p align="left">
-   <a href="https://LOCAL{///}graphs/contributors">
-      <img src="https://contrib.rocks/image?repo=/">
+   <a href="https://github.com{/lukerspace/App/}graphs/contributors">
+      <img src="https://contrib.rocks/image?repo=lukerspace/App">
    </a>
 </p>
 </details>
@@ -315,7 +287,7 @@ echo 'INSERT-TEST-COMMAND-HERE'
 
 ## License
 
- is protected under the [LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
+App is protected under the [LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
 
 ---
 
