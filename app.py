@@ -7,23 +7,18 @@ from flask import *
 import redis
 import gunicorn
 from dotenv import load_dotenv
+from redis_clients import get_redis_client
+from update_pseudo_data.default_sqlite import *
+from update_pseudo_data.sqlite_update_spy import *
+from update_pseudo_data.sqlite_update_nav import *
+
 
 load_dotenv()
 
-# Configure Redis
-redis_client = redis.StrictRedis(
-    host=os.getenv("REDIS_HOST"),  # Redis server hosts
-    port=6379,         # Redis server port
-    db=0,
-    decode_responses=True
-)
+redis_client = get_redis_client()
 
 from api.user_api import appUser
 from api.nav_api import appNav
-from api.coppock_api import appCoppock
-from api.watchlist_api import appDaily
-from api.iv_delta_api import appIvdelta
-from api.gex_api import appGex
 
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
@@ -34,10 +29,7 @@ app.secret_key="hello"
 
 app.register_blueprint(appNav, url_prefix='/api')
 app.register_blueprint(appUser, url_prefix='/api')
-app.register_blueprint(appCoppock, url_prefix='/api')
-app.register_blueprint(appDaily, url_prefix='/api')
-app.register_blueprint(appIvdelta, url_prefix='/api')
-app.register_blueprint(appGex, url_prefix='/api')
+
 
 # Pages
 @app.route("/")
@@ -52,7 +44,7 @@ def index():
 	
     token = redis_client.get(user_email)
     if not token:
-        print({"error": "Token not found in Redis"})
+        print({"error": "Token not found in Redis!!!"})
         return render_template("index.html")
     
 
@@ -65,31 +57,6 @@ def index():
     return  response
 
 
-@app.route("/member")
-def member():
-    
-    user_email = session.get('user', {}).get('email')
-    if not user_email:
-        return  render_template("index.html")
-	
-    token = redis_client.get(user_email)
-    if not token:
-        print({"error": "Token not found in Redis"})
-        return render_template("index.html")
-    
-    # Retrieve user email from session
-    user_email = session.get('user', {}).get('email')
-    name=session.get('user', {}).get('name')
-    print(session,user_email,name)
-    
-    response = make_response(render_template("member.html",name=name,email=user_email))
-    response.headers['Authorization'] = 'Bearer ' + token
-
-    return response
-
-
-
-
 @app.route("/data")
 def datatable():
     
@@ -99,7 +66,7 @@ def datatable():
 	
     token = redis_client.get(user_email)
     if not token:
-        print({"error": "Token not found in Redis"})
+        print({"error": "Token not found in Redi!!"})
         return render_template("index.html")
     
 
@@ -112,8 +79,6 @@ def datatable():
     response.headers['Authorization'] = 'Bearer ' + token
 
     return response
-
-
 
 
 if __name__ == "__main__":

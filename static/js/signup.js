@@ -1,5 +1,3 @@
-
-// =================================================================================
 // // 註冊
 const signUpForm = document.getElementById("signUpForm");
 signUpForm.addEventListener("submit", (evt) => {
@@ -44,7 +42,6 @@ signUpForm.addEventListener("submit", (evt) => {
     })
       .then((res) => {
         responseStatus = res.status
-        console.log(requestBody);
         return res.json();
       })
       .then((data) => {

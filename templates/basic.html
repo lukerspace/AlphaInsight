@@ -16,8 +16,6 @@
                 <nav class="navbar">
                     <ul>
                         <li id="schedule"><a href="/">Main</a></li>
-                        <li class="hide" id="data"><a href="/data">Data</a></li>
-                        <li class="hide" id="member"><a href="/member">Subscriber</a></li>
                         <li class="hide" id="logInSignUp"><a href="#">LogIn</a></li>
                         <li class="hide" id="logOut" hidden><a href="#">LogOut</a></li>
                         
@@ -96,7 +94,7 @@
     {% block main %}{% endblock %}
     <main id="memberonly" >Membership and Subscription Only</main>
     <footer><p>COPYRIGHT ©  2024 </p></footer>
-    <script src="{{url_for('static',filename='js/dropdown.js')}}"></script>
+    <script src="{{url_for('static',filename='js/navselector.js')}}"></script>
     <script src="{{url_for('static',filename='js/signup.js')}}"></script>
     
     <script src="{{url_for('static',filename='js/logout.js')}}"></script>

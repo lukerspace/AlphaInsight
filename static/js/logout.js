@@ -1,4 +1,3 @@
-
 // //登出
 function signinCheck() {
   fetch(userAPI)

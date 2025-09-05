@@ -1,4 +1,3 @@
-
 // 若api中有data=客戶資料API則顯示登出
 // 若api中無data=NULL則顯示登入
 fetch(`${window.origin}/api/user`)
@@ -6,8 +5,6 @@ fetch(`${window.origin}/api/user`)
   .then((data) => {
     if (data.data) {
       document.getElementById("logOut").classList.remove("hide");
-      document.getElementById("member").classList.remove("hide");
-      document.getElementById("data").classList.remove("hide");
       document.getElementById("memberonly").classList.add("hide")
     } else {
       document.getElementById("logInSignUp").classList.remove("hide");

@@ -1,6 +1,3 @@
-
-
-// ======================================================================
 //選取欄位，登入以及註冊介面
 const signupForm = document.querySelector("#signUpForm");
 const signinForm = document.querySelector("#logInForm");

@@ -1,6 +1,3 @@
-
-
-
 const dropdownList = () => {
     // Wait for 0.5 seconds before executing the code inside setTimeout
     setTimeout(() => {
