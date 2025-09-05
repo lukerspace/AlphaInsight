@@ -233,9 +233,8 @@ Build Alphainsight from the source and intsall dependencies:
 
 Run the project with:
 
-    ```sh
     ❯ python run app.py
-    ```
+
 
 
 When the server starts, the application will automatically trigger the init_schema function from update_pseudo_data, which:
