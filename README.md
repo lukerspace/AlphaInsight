@@ -216,7 +216,7 @@ Build Alphainsight from the source and intsall dependencies:
 3. **Install the dependencies:**
 
     ```sh
-    ❯ pip install -r 'requirement.txt'
+    ❯ pip install -r 'requirements.txt'
     ```
 
    
