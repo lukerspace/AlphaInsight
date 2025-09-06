@@ -8,7 +8,11 @@ import redis
 import gunicorn
 from dotenv import load_dotenv
 from redis_clients import get_redis_client
+
+# create default database
 from update_pseudo_data.default_sqlite import *
+
+## default psesudo data 
 from update_pseudo_data.sqlite_update_spy import *
 from update_pseudo_data.sqlite_update_nav import *
 

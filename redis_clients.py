@@ -1,5 +1,5 @@
 import os
-
+# fake redis
 USE_FAKE_REDIS = os.getenv("USE_FAKE_REDIS", "1") == "1"
 
 _client = None  

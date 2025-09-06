@@ -49,4 +49,4 @@ def update_nav(ticker="NVDA", start="2010-01-01"):
     con.close()
 
 
-update_nav("AMZN")
+update_nav("NVDA")
