@@ -226,7 +226,7 @@ Build Alphainsight from the source and intsall dependencies:
 
 Run the project with:
 
-    ❯ python run app.py
+    ❯ python app.py
 
 
 
