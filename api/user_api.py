@@ -18,7 +18,6 @@ load_dotenv()
 redis_client = get_redis_client()
 
 
-
 @appUser.route('/user', methods=['GET'])
 def get_userdata():
     # 登入成功
@@ -98,7 +97,7 @@ def signin():
                     'email': email,
                     'exp': expire_time  # Token expiration time
                 }, os.getenv("JWT_SECRET", "pass"), algorithm='HS256')
-            print("++++++>>>", token)
+            # print(token)
             # Store JWT token in Redis with user email as key and set the expiration time to 10 minutes
             redis_client.set(user["email"], token)
             redis_client.expire(user["email"], 60*10)

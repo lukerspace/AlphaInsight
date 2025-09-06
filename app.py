@@ -28,8 +28,8 @@ app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 app.config["JSON_SORT_KEYS"] = False
-app.config['JWT_SECRET_KEY'] = 'pass'  # Change this to a strong secret key
-app.secret_key="hello"
+app.secret_key="YOUR_SECRET_KEY"
+# app.config['JWT_SECRET_KEY'] = 'YOUR JWT_SECRET_KEY' 
 
 app.register_blueprint(appNav, url_prefix='/api')
 app.register_blueprint(appUser, url_prefix='/api')
@@ -39,7 +39,6 @@ app.register_blueprint(appUser, url_prefix='/api')
 @app.route("/")
 def index():
 	# return render_template("index.html")
-      
     # Retrieve user email from session
     user_email = session.get('user', {}).get('email')
     # Retrieve the token from Redis
@@ -51,14 +50,13 @@ def index():
         print({"error": "Token not found in Redis!!!"})
         return render_template("index.html")
     
-
     # Prepare response and include token in headers
     # render template with header attched with auth
     response = make_response(render_template("index.html"))
     response.headers['Authorization'] = 'Bearer ' + token
 
-
     return  response
+
 
 
 @app.route("/data")
@@ -73,7 +71,6 @@ def datatable():
         print({"error": "Token not found in Redi!!"})
         return render_template("index.html")
     
-
     # Retrieve user email from session
     user_email = session.get('user', {}).get('email')
     name=session.get('user', {}).get('name')
